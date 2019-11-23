@@ -55,22 +55,15 @@ coro=: 3 : 0
  end.{.y
 )
 NB. corner orbit
-orbi=: cube&((4#0 1)~:4<:i.&(face@:(CORN&{))) NB. wrong orbit corners
-rotx=: {&5 6 7 4 1 2 3 0
-roty=: {&4 6 5 7 3 1 2 0
-rotz=: {&5 4 6 7 0 1 3 2
+orbi=: cube&((4#0 1)~:4<:i.&(face@:(CORN&{))) NB. out of orbit corners
+xx=: {~5 6 7 4 1 2 3 0
+yy=: {~4 6 5 7 3 1 2 0
+zz=: {~5 4 6 7 0 1 3 2
 EDMT=: ".each'|'&splitstring"1'm'fread'./s3table'
-EVRO=: ,/^:2@:(rotz^:0 2)@:(roty^:0 2)@:(rotx^:0 2)@:<:each {."1 EDMT NB. every rotation
-movs=: ;:'- l ll L ff r rr R bb uu dd'
-orbo=: 3 : 'y sper ;movs{~1{::EDMT{~(1:i.~64&>)EVRO(i.~S:0~)I.@:orbi y'
-alph=: a:;(0 3;5 7);(1 3;4 7);(<0 1);(<0 3);<<1 3
-beta=: a:;(<0 7);(<1 6);<<0 4
-perm=: ,,&>/L:2 {alph,&<beta
-gcos=: 3 : 'perm{~0 i.~ ((4#0 1)(*./@:=i.1:)4<:(face CORN{cube)&i.)"2 face (CORN{y) C.inv~S:0 perm' NB. which coset lies on
-
-
-NB. mrox=: 'lrbfudLRBFUD'{~'lrudfbLRUDFB'&i.
-NB. mroy=: 'bfudlrBFUDLR'{~'lrudfbLRUDFB'&i.
-NB. mroz=: 'udrlfbUDRLFB'{~'lrudfbLRUDFB'&i.
-NB. 'rz ry rx'=. 4 4 4#:I{~i=. (1:i.~64&>)I=. EVRO(i.~S:0~)I.@:orbi y
-NB. y sper mroz^:rz mroy^:ry mrox^:rx ;movs{~1{::i{EDMT
+EVRO=: (],{~)&.>/@:(zz;yy;xx;,:)@:<:S:0 {."1 EDMT NB. every rotation
+MOVS=: ;:'- l ll L ff r rr R bb uu dd'
+orbo=: 3 : 'y sper MOVS;@:{~1{::EDMT{~(1:i.~8&>)EVRO(i.~S:0~)I.@:orbi y'
+ALPH=: a:;(0 3;5 7);(1 3;4 7);(<0 1);(<0 3);<<1 3
+BETA=: a:;(0 7;1 6);<<0 4
+PERM=: ,,&>/L:2 {ALPH,&<BETA
+gcos=: 3 : '((4#0 1)=4<:(face CORN{cube)&i.)"2 face (CORN{y) C.~S:0 PERM' NB. which coset lies on
