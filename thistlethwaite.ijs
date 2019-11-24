@@ -8,6 +8,7 @@ ap=: [:~.[:,/{"1/
 set=: 4 : '1 y} x#0'"1
 'u l f r b d'=: i.6
 gface=: face@:{
+pat=: 4 : '*./cube e.&(/:~"1@:(UDSL&gface)) y'
 NB. graphical view of the cube
 COLORS=: 0 0 0,255 128 0,0 0 255,255 0 0,255 255 0,255 255 255,:0 255 0
 HUE0=: 0 1 2 3 4 5 6{COLORS NB. mine
@@ -28,6 +29,10 @@ D=: cube C.inv~ 40 42 47 45;41 44 46 43;13 21 29 37;14 22 30 38;15 23 31 39
 F=: cube C.inv~ 16 18 23 21;17 20 22 19;5 24 42 15;6 27 41 12;7 29 40 10
 B=: cube C.inv~ 32 34 39 37;33 36 38 35;2 8 45 31;1 11 46 28;0 13 47 26
 M=: (,cube{inv~])L,R,F,B,U,:D
+NB. sets
+G1=: L,R,(U{U),(D{D),F,:B
+G2=: L,R,(U{U),(D{D),(F{F),:B{B
+G3=: (L{L),(R{R),(U{U),(D{D),(F{F),:B{B
 NB. movement helpers
 dper=: ({~M({/@:{)~|.@:,) :. ({~M({/@:{)~12|6+,) NB. permutate by index
 rper=: dper ?@:($&12) NB. random permutation
@@ -47,26 +52,25 @@ eor=: ('u' sper~ mov^:pow)^:(1-*./@:orie)^:_
 NB. corner orientation
 itom=: (;:'l ll L f ff F r rr R b bb B uu dd');@:{~11 12 13 21 22 23 31 32 33 41 42 43 51 52&i. NB. index to movement
 COMT=: ".each','splitstring"1'm'fread'./s2table' NB. corners movements table
-COMT=: itom L:0 (<a:;0){COMT
+NB. COMT=: itom L:0 (<a:;0){COMT
 CORN=: 8 34 0,15 21 40,31 37 47,24 18 7,10 5 16,13 45 39,29 42 23,:26 2 32
 twst=: 1 3 (e.~i.1:)"1 CORN&gface
 UDSL=: 6 17,22 41,1 33,:38 46
-G1=: L,R,(U{U),(D{D),F,:B
 coro=: 3 : 0
- y=. G1&ap^:([:(1-+./)cube&([:*./e.&(12 set UDSL&gface))"1)^:_ ,:y
- y=: ,:y {~ 1 i.~ cube&([:*./e.&(12 set UDSL&gface))"1 y
- while. ((8#0)-.@:-:twst){.y do.
-  y=. ,/y (sper inv)S:0/"1 COMT
-  y=. y#~([:(1-+./)cube&([:*./e.&(12 set UDSL&gface))"1)y
-  y=. y #~(=>./)(0+/@:=twst)"1 y
- end.{.y
+ y=. G1&ap^:(*./@:(UDSL&(-.@:pat)"1))^:_ ,:y
+ y=. ,:({~1:i.~UDSL&pat"1)y
+ P=. >1{"1 COMT
+ while. (#y)=i=. 1 i.~ (#P)>j=. P i. twst"1 y do. y=. G2 ap y end.
+ (i{y) sper inv itom 0{::COMT{~i{j
 )
 NB. corner orbit
-NB. orbi=: cube&((4#0 1)~:4<:i.&(face@:(CORN&{))) NB. out of orbit corners
-NB. G2=: L,R,(U{U),(D{D),(F{F),:B{B
+orbi=: cube&((4#0 1)~:4<:i.&(CORN&gface)) NB. out of orbit corners
+orbo=: 3 : 0
+ y=. ,:y
+ while. orbi"1 y do. y=. G2 ap y end.
+)
 NB. orbo=: 3 : '({~(0:i.~(+./@:orbi"1)))G2 ap^:(*./@:(+./@:orbi"1)@:])^:_,:y'
 NB. NB. last phase
-NB. G3=: (L{L),(R{R),(U{U),(D{D),(F{F),:B{B
 NB. last=: G3 ap^:(*./@:(cube-.@:-:])"1)^:_,:
 
-cube3=: coro cube2=: eor cube1=: cube rper 300
+NB. cube3=: coro cube2=: eor cube1=: cube rper 300
