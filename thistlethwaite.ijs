@@ -5,7 +5,9 @@ NB. cube representation and helper verbs
 cube=: i.48
 face=: <.@%&8
 ap=: [:~.[:,/{"1/
+set=: 4 : '1 y} x#0'"1
 'u l f r b d'=: i.6
+gface=: face@:{
 NB. graphical view of the cube
 COLORS=: 0 0 0,255 128 0,0 0 255,255 0 0,255 255 0,255 255 255,:0 255 0
 HUE0=: 0 1 2 3 4 5 6{COLORS NB. mine
@@ -33,7 +35,7 @@ sper=: (dper 'lrfbudLRFBUD'&i.) :. (dper inv 'lrfbudLRFBUD'&i.) NB. permutate by
 NB. edge detection
 EDGE=: 3 9,17 6,4 25,33 1,19 12,20 27,22 41,35 28,38 46,36 11,43 14,:44 30
 stor=: f,b,u,d,l,r NB. stickers order
-orie=: stor</"1@:i.EDGE&(face@:{) NB. orientation
+orie=: stor</"1@:i.EDGE&gface NB. orientation
 NB. edge orientation
 EMT=: 4 8$;:'L ffL fL Ruu Bl l ll rruu f F ff rrF ddff llfll llUll rF ffrff r Frf R bRB bbR ddrr rr llBll rrbrr ddbb b bb B lBL Rbr'
 mte=: 1 0 i.~&> 4({.;}.)orie NB. movement table entry
@@ -47,18 +49,24 @@ itom=: (;:'l ll L f ff F r rr R b bb B uu dd');@:{~11 12 13 21 22 23 31 32 33 41
 COMT=: ".each','splitstring"1'm'fread'./s2table' NB. corners movements table
 COMT=: itom L:0 (<a:;0){COMT
 CORN=: 8 34 0,15 21 40,31 37 47,24 18 7,10 5 16,13 45 39,29 42 23,:26 2 32
-twst=: 1 3 (e.~i.1:)"1 face@:(CORN&{)
+twst=: 1 3 (e.~i.1:)"1 CORN&gface
+UDSL=: 6 17,22 41,1 33,:38 46
+G1=: L,R,(U{U),(D{D),F,:B
 coro=: 3 : 0
- y=. ,:y
- while. -.*./0=twst {.y do.
-  P=. ,/COMT(sper inv)&>~/<"1 y
-  y=. P #~(=>./)(0+/@:=twst)"1 P
+ y=. G1&ap^:([:(1-+./)cube&([:*./e.&(12 set UDSL&gface))"1)^:_ ,:y
+ y=: ,:y {~ 1 i.~ cube&([:*./e.&(12 set UDSL&gface))"1 y
+ while. ((8#0)-.@:-:twst){.y do.
+  y=. ,/y (sper inv)S:0/"1 COMT
+  y=. y#~([:(1-+./)cube&([:*./e.&(12 set UDSL&gface))"1)y
+  y=. y #~(=>./)(0+/@:=twst)"1 y
  end.{.y
 )
 NB. corner orbit
-orbi=: cube&((4#0 1)~:4<:i.&(face@:(CORN&{))) NB. out of orbit corners
-G2=: L,R,(U{U),(D{D),(F{F),:B{B
-orbo=: 3 : '({~(0:i.~(+./@:orbi"1)))G2 ap^:(*./@:(+./@:orbi"1)@:])^:_,:y'
-NB. last phase
-G3=: (L{L),(R{R),(U{U),(D{D),(F{F),:B{B
-last=: G3 ap^:(*./@:(cube-.@:-:])"1)^:_,:
+NB. orbi=: cube&((4#0 1)~:4<:i.&(face@:(CORN&{))) NB. out of orbit corners
+NB. G2=: L,R,(U{U),(D{D),(F{F),:B{B
+NB. orbo=: 3 : '({~(0:i.~(+./@:orbi"1)))G2 ap^:(*./@:(+./@:orbi"1)@:])^:_,:y'
+NB. NB. last phase
+NB. G3=: (L{L),(R{R),(U{U),(D{D),(F{F),:B{B
+NB. last=: G3 ap^:(*./@:(cube-.@:-:])"1)^:_,:
+
+cube3=: coro cube2=: eor cube1=: cube rper 300
