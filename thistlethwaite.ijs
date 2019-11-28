@@ -75,7 +75,7 @@ BETA=: <:L:0 a:;(1 8;2 7);<<1 5
 RABC=: (i.8)C.~S:1,,&>/L:2{ALPH,&<BETA
 ECMT=: 'm'fread'./s4table' NB.edge cosets movement table
 OOAC=: <:@:".L:0 '-'&splitstring L:0 '|'&splitstring S:0 '.' splitstring {.ECMT NB. out of orbit and cosets
-EDAM=: _36 ([: ".L:0 ','&splitstring)"1\ }.ECMT NB. edge and movement
+EDAM=: _70 ([: ".L:0 ','&splitstring)"1\ }.ECMT NB. edge and movement
 orbo=: (3 : 0)@:,:
  while. (#y)=i=. 1 i.~ (#COMT)>j=. (({."1 COMT)i.<)@:>:@:I.@:orbi"1 y do. y=. G2 ap y end.
  y=. (i{y) sper comi 1{::COMT{~i{j
@@ -90,5 +90,5 @@ last=: 3 : 0
  lr=. cube i.&(LRSL&{) y
  fb;ud;lr
 )
-NB. cube3=: coro cube2=: eor cube1=: cube rper 300
+cube3=: coro cube2=: eor cube1=: cube rper 300
 NB. test=: cube sper inv 'dbfuRLdllffddfllrrFRbrrBRBllbbuuluuffllffLbblbbLrruurrddffuubbddffbbllbbllbb'
