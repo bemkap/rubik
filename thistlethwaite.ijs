@@ -73,22 +73,19 @@ COMT=: ".L:0'|'&splitstring"1'm'fread'./s3table' NB. corners orbit movement tabl
 ALPH=: <:L:0 a:;(1 4;6 8);(2 4;5 8);(<1 2);(<1 4);<(<2 4)
 BETA=: <:L:0 a:;(1 8;2 7);<<1 5
 RABC=: (i.8)C.~S:1,,&>/L:2{ALPH,&<BETA
-ECMT=: 'm'fread'./s4table' NB.edge cosets movement table
-OOAC=: <:@:".L:0 '-'&splitstring L:0 '|'&splitstring S:0 '.' splitstring {.ECMT NB. out of orbit and cosets
-EDAM=: _70 ([: ".L:0 ','&splitstring)"1\ }.ECMT NB. edge and movement
+ECMT=: 'm'fread'./s4table'
+OOOS=: <:@:".L:0 ',' splitstring 0{ECMT NB. out of orbit sets
+GCOS=: ((i.8)C.~<:@:".)L:0 ','splitstring 1{ECMT NB. g3 cosets
+EDAM=: _70(".L:0)\ ','&splitstring"1]2}.ECMT NB. edge and movements
 orbo=: (3 : 0)@:,:
  while. (#y)=i=. 1 i.~ (#COMT)>j=. (({."1 COMT)i.<)@:>:@:I.@:orbi"1 y do. y=. G2 ap y end.
  y=. (i{y) sper comi 1{::COMT{~i{j
- NB. while. (#y)=j=. 1 i.~ (#RABC)>i=. (1:i.~(4#0 1)-:"1 cube((4<:i.)RABC&{)&(CORN&{)])"1 y do. y=. G3 ap y end.
+ NB. while. *./GCOS ((i.=#@:[) cube&(<@:i.&(CORN&{)))"1 y do. y=. G3 ap y end.
+ NB. while. *./i=. (#OOOS)=OOOS (i.<@:I.@:orbi)"1 y do. y=. G3 ap y end.
+ NB. cube i.&(CORN&{) (i i. 0){y 
 )
 
-NB. 'while. (#y)=i=. 0 i.~ +./@:orbi"1 y do. y=. G2 ap y end.i{y'@:,:
-NB. last phase
-last=: 3 : 0
- fb=. cube i.&(FBSL&{) y
- ud=. cube i.&(UDSL&{) y
- lr=. cube i.&(LRSL&{) y
- fb;ud;lr
-)
-cube3=: coro cube2=: eor cube1=: cube rper 300
+
+NB. cube3=: coro cube2=: eor cube1=: cube rper 300
 NB. test=: cube sper inv 'dbfuRLdllffddfllrrFRbrrBRBllbbuuluuffllffLbblbbLrruurrddffuubbddffbbllbbllbb'
+test=: cube sper inv 'flRddbbuffddlRfrrfbbrBrrbrbLuuRuuddrrddLfflddLllrrbbrrffrrdduubbuurruurruu'
