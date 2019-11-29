@@ -9,6 +9,7 @@ ap=: [:~.[:,/{"1/
 gface=: face@:{
 pate=: 4 : '*./cube e.&(/:~"1@:(x&gface)) y'
 pati=: 4 : 'cube i.&(/:~"1@:(x&gface)) y'
+none=: 0&(*./@=)
 NB. graphical view of the cube
 COLORS=: 0 0 0,255 128 0,0 0 255,255 0 0,255 255 0,255 255 255,:0 255 0
 HUE0=: 0 1 2 3 4 5 6{COLORS NB. mine
@@ -74,15 +75,15 @@ ALPH=: <:L:0 a:;(1 4;6 8);(2 4;5 8);(<1 2);(<1 4);<(<2 4)
 BETA=: <:L:0 a:;(1 8;2 7);<<1 5
 RABC=: (i.8)C.~S:1,,&>/L:2{ALPH,&<BETA
 ECMT=: 'm'fread'./s4table'
-OOOS=: <:@:".L:0 ',' splitstring 0{ECMT NB. out of orbit sets
-GCOS=: ((i.8)C.~<:@:".)L:0 ','splitstring 1{ECMT NB. g3 cosets
+pars=: C.&(i.8)S:1@:(<:@:".L:0)@:(';'&splitstring&.>)@:(','&splitstring)
+COAC=: {"1&pars/ 2{.ECMT NB. corner orbits and cosets
 EDAM=: _70(".L:0)\ ','&splitstring"1]2}.ECMT NB. edge and movements
+oig3=: (4#0 1)-:4&<: NB. orbits in g3
 orbo=: (3 : 0)@:,:
  while. (#y)=i=. 1 i.~ (#COMT)>j=. (({."1 COMT)i.<)@:>:@:I.@:orbi"1 y do. y=. G2 ap y end.
- y=. (i{y) sper comi 1{::COMT{~i{j
- NB. while. *./GCOS ((i.=#@:[) cube&(<@:i.&(CORN&{)))"1 y do. y=. G3 ap y end.
- NB. while. *./i=. (#OOOS)=OOOS (i.<@:I.@:orbi)"1 y do. y=. G3 ap y end.
- NB. cube i.&(CORN&{) (i i. 0){y 
+ y=. ,:(i{y) sper comi 1{::COMT{~i{j
+ while. (#y)=i=. 1 i.~ (+./)@:(COAC oig3"1@:{ cube&(i.&(CORN&{)))"1 y do. y=. G3 ap y end.
+ E=. EDAM{~1 i.~ (COAC oig3"1@:{ cube&(i.&(CORN&{)))i{y
 )
 
 
