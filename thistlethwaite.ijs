@@ -9,7 +9,7 @@ ap=: [:~.[:,/{"1/
 gface=: face@:{
 pate=: 4 : '*./cube e.&(/:~"1@:(x&gface)) y'
 pati=: 4 : 'cube i.&(/:~"1@:(x&gface)) y'
-none=: 0&(*./@=)
+get=: {."1@:[i.]
 NB. graphical view of the cube
 COLORS=: 0 0 0,255 128 0,0 0 255,255 0 0,255 255 0,255 255 255,:0 255 0
 HUE0=: 0 1 2 3 4 5 6{COLORS NB. mine
@@ -68,25 +68,24 @@ coro=: (3 : 0)@:,:
  (i{y) sper inv ctmi 0{::CTMT{~i{j
 )
 NB. corner orbit
-orbi=: cube&(((4#0 1)~:4<:i.)&(CORN&{))
+orbi=: (4#0 1)>:@:I.@:~:4<:CORN&pati
 comi=: (;:'l ll L ff r rr R bb uu dd');@:{~<:
 COMT=: ".L:0'|'&splitstring"1'm'fread'./s3table' NB. corners orbit movement table
-ALPH=: <:L:0 a:;(1 4;6 8);(2 4;5 8);(<1 2);(<1 4);<(<2 4)
-BETA=: <:L:0 a:;(1 8;2 7);<<1 5
-RABC=: (i.8)C.~S:1,,&>/L:2{ALPH,&<BETA
 ECMT=: 'm'fread'./s4table'
 pars=: C.&(i.8)S:1@:(<:@:".L:0)@:(';'&splitstring&.>)@:(','&splitstring)
 COAC=: {"1&pars/ 2{.ECMT NB. corner orbits and cosets
-EDAM=: _70(".L:0)\ ','&splitstring"1]2}.ECMT NB. edge and movements
-oig3=: (4#0 1)-:4&<: NB. orbits in g3
+EDAM=: _70(".L:0)\','&splitstring"1]2}.ECMT NB. edge and movements
+EDOR=: 0 8 2 11 5 6 9 7 10 4 1 3 NB. method edge order. change later
+perm=: (,"2 COAC{CORN)&((,CORN)}"1)
+cig3=: (8#i.6)-:0 1 2 1 2 0{~face
 orbo=: (3 : 0)@:,:
- while. (#y)=i=. 1 i.~ (#COMT)>j=. (({."1 COMT)i.<)@:>:@:I.@:orbi"1 y do. y=. G2 ap y end.
- y=. ,:(i{y) sper comi 1{::COMT{~i{j
- while. (#y)=i=. 1 i.~ (+./)@:(COAC oig3"1@:{ cube&(i.&(CORN&{)))"1 y do. y=. G3 ap y end.
- E=. EDAM{~1 i.~ (COAC oig3"1@:{ cube&(i.&(CORN&{)))i{y
+ while. (#y)=i=. 1 i.~ (#COMT)>j=. (COMT get <@:orbi)"1 y do. y=. G2 ap y end.
+ y=. (i{y) sper comi 1{::COMT{~i{j
+ NB. while. (#y)=i=. 1 i.~ +./@:(cig3"1)@:perm"1 y  do. y=. G3 ap y end.
+ NB. i{y
+ NB. E=. EDAM{~1 i.~ (COAC oig3"1@:{ CORN&pati)i{y
+ NB. (i{y) sper inv comi 1{::E{~({."1 E)i.<10#./:~>:EDOR{~FBSL i.~ EDGE{i{y
 )
 
-
-NB. cube3=: coro cube2=: eor cube1=: cube rper 300
-NB. test=: cube sper inv 'dbfuRLdllffddfllrrFRbrrBRBllbbuuluuffllffLbblbbLrruurrddffuubbddffbbllbbllbb'
 test=: cube sper inv 'flRddbbuffddlRfrrfbbrBrrbrbLuuRuuddrrddLfflddLllrrbbrrffrrdduubbuurruurruu'
+cube1=: orbo coro eor test
