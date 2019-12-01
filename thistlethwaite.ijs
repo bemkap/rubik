@@ -34,6 +34,7 @@ S=: (,cube{inv~])L,R,F,B,U,:D
 NB. rotations
 crt=: 4 5 7 6 1 0 2 3,4 6 5 7 3 1 2 0,:5 6 7 4 1 2 3 0
 mrt=: 5 4 2 3 0 1 11 10 8 9 6 7,3 2 0 1 4 5 9 8 6 7 10 11,:0 1 5 4 2 3 6 7 11 10 8 9
+ert=: 5 4 6 7 0 1 3 2 9 10 11 8,8 9 11 10 5 6 7 4 2 3 1 0,:1 3 0 2 10 9 8 11 5 6 7 4
 rot=: 1 : '{{/@:(x#~4 4 4&#:)'
 alr=: 1 : '(x rot)"1 0&(i.64)' NB. all rotations
 NB. movement helpers
@@ -87,7 +88,7 @@ cig3=: (8#i.6)-:0 1 2 1 2 0{~face
 orbo=: 3 : 0
  i=. 1 i.~ (#COMT)>j=. (COMT get <)"1 (crt alr)&.:<: orbi y
  y=. y sper MOVS{~i (mrt rot)~ MOVS i. comi 1{::COMT{~i{j
- E=. EDAM{~1 i.~ COAC oig3"1@:{ i (crt rot)~ CORN pati cube2
+ E=. EDAM{~1 i.~ COAC oig3"1@:{ i (crt rot inv)~ CORN pati cube2
 
  NB. (i{y) sper inv comi 1{::E{~({."1 E)i.<10#./:~>:EDOR{~FBSL i.~ EDGE{i{y
 )
