@@ -6,6 +6,7 @@ cube=: i.48
 face=: <.@%&8
 ap=: [:~.[:,/{"1/
 'u l f r b d'=: i.6
+MOVS=: 'lrfbudLRFBUD'
 gface=: face@:{
 pate=: 4 : '*./cube e.&(/:~"1@:(x&gface)) y'
 pati=: 4 : 'cube i.&(/:~"1@:(x&gface)) y'
@@ -18,8 +19,8 @@ HUE2=: 0 1 6 5 2 4 3{COLORS NB. simulator
 display=: 3 : 0
  HUE0 display y
  :
- c=. 3 3$"1>:(5|."1(i.6),.4&(|."1))face 6 8$y
- c=. ,/(_3 0 _3(|."1)"0 2])1 1 0 0 0 1(,./;.1)c
+ c=. >:4(3 3${.,_1:,}.)"1 face 6 8$y
+ c=. ,/_4,./\(12 3 3$0)1 4 5 6 7 9}~c
  x viewmat c
 )
 NB. movements permutations
@@ -30,10 +31,15 @@ D=: cube C.inv~ 40 42 47 45;41 44 46 43;13 21 29 37;14 22 30 38;15 23 31 39
 F=: cube C.inv~ 16 18 23 21;17 20 22 19;5 24 42 15;6 27 41 12;7 29 40 10
 B=: cube C.inv~ 32 34 39 37;33 36 38 35;2 8 45 31;1 11 46 28;0 13 47 26
 S=: (,cube{inv~])L,R,F,B,U,:D
+NB. rotations
+crt=: 4 5 7 6 1 0 2 3,4 6 5 7 3 1 2 0,:5 6 7 4 1 2 3 0
+mrt=: 5 4 2 3 0 1 11 10 8 9 6 7,3 2 0 1 4 5 9 8 6 7 10 11,:0 1 5 4 2 3 6 7 11 10 8 9
+rot=: 1 : '{{/@:(x#~4 4 4&#:)'
+alr=: 1 : '(x rot)"1 0&(i.64)' NB. all rotations
 NB. movement helpers
 dper=: ({~S({/@:{)~|.@:,) :. ({~S({/@:{)~12|6+,) NB. permute by index
 rper=: dper ?@:($&12) NB. random permutation
-sper=: (dper 'lrfbudLRFBUD'&i.) :. (dper inv 'lrfbudLRFBUD'&i.) NB. permute by string
+sper=: (dper MOVS&i.) :. (dper inv MOVS&i.) NB. permute by string
 
 NB. sets
 G1=: L,R,(U{U),(D{D),F,:B
@@ -78,14 +84,13 @@ EDAM=: _70(".L:0)\','&splitstring"1]2}.ECMT NB. edge and movements
 EDOR=: 0 8 2 11 5 6 9 7 10 4 1 3 NB. method edge order. change later
 perm=: (,"2 COAC{CORN)&((,CORN)}"1)
 cig3=: (8#i.6)-:0 1 2 1 2 0{~face
-orbo=: (3 : 0)@:,:
- while. (#y)=i=. 1 i.~ (#COMT)>j=. (COMT get <@:orbi)"1 y do. y=. G2 ap y end.
- y=. (i{y) sper comi 1{::COMT{~i{j
- NB. while. (#y)=i=. 1 i.~ +./@:(cig3"1)@:perm"1 y  do. y=. G3 ap y end.
- NB. i{y
- NB. E=. EDAM{~1 i.~ (COAC oig3"1@:{ CORN&pati)i{y
+orbo=: 3 : 0
+ i=. 1 i.~ (#COMT)>j=. (COMT get <)"1 (crt alr)&.:<: orbi y
+ y=. y sper MOVS{~i (mrt rot)~ MOVS i. comi 1{::COMT{~i{j
+ E=. EDAM{~1 i.~ COAC oig3"1@:{ i (crt rot)~ CORN pati cube2
+
  NB. (i{y) sper inv comi 1{::E{~({."1 E)i.<10#./:~>:EDOR{~FBSL i.~ EDGE{i{y
 )
 
 test=: cube sper inv 'flRddbbuffddlRfrrfbbrBrrbrbLuuRuuddrrddLfflddLllrrbbrrffrrdduubbuurruurruu'
-cube1=: orbo coro eor test
+cube1=: coro eor test
