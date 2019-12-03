@@ -2,20 +2,20 @@ NB. rubik's cube solver
 NB. thistlethwaite method
 require'viewmat'
 NB. cube representation and helper verbs
-cube=: i.48
-face=: <.@%&8
-ap=: [:~.[:,/{"1/
+cube =: i.48
+face =: <.@%&8
+ap   =: [:~.[:,/{"1/
 'u l f r b d'=: i.6
-MOVS=: 'lrfbudLRFBUD'
+MOVS =: 'lrfbudLRFBUD'
 gface=: face@:{
-pate=: 4 : '*./cube e.&(/:~"1@:(x&gface)) y'
-pati=: 4 : 'cube i.&(/:~"1@:(x&gface)) y'
-get=: {."1@:[i.]
+pate =: 4 : '*./cube e.&(/:~"1@:(x&gface)) y'
+pati =: 4 : 'cube i.&(/:~"1@:(x&gface)) y'
+get  =: {."1@:[i.]
 NB. graphical view of the cube
-COLORS=: 0 0 0,255 128 0,0 0 255,255 0 0,255 255 0,255 255 255,:0 255 0
-HUE0=: 0 1 2 3 4 5 6{COLORS NB. mine
-HUE1=: 0 4 2 3 6 1 5{COLORS NB. standard
-HUE2=: 0 1 6 5 2 4 3{COLORS NB. simulator
+COLORS =: 0 0 0,255 128 0,0 0 255,255 0 0,255 255 0,255 255 255,:0 255 0
+HUE0   =: 0 1 2 3 4 5 6{COLORS NB. mine
+HUE1   =: 0 4 2 3 6 1 5{COLORS NB. standard
+HUE2   =: 0 1 6 5 2 4 3{COLORS NB. simulator
 display=: 3 : 0
  HUE0 display y
  :
@@ -35,6 +35,7 @@ NB. rotations
 crt=: 4 5 7 6 1 0 2 3,4 6 5 7 3 1 2 0,:5 6 7 4 1 2 3 0
 mrt=: 5 4 2 3 0 1 11 10 8 9 6 7,3 2 0 1 4 5 9 8 6 7 10 11,:0 1 5 4 2 3 6 7 11 10 8 9
 ert=: 5 4 6 7 0 1 3 2 9 10 11 8,8 9 11 10 5 6 7 4 2 3 1 0,:1 3 0 2 10 9 8 11 5 6 7 4
+INV=: 0 3 2 1 12 15 14 13 8 11 10 9 4 7 6 5 48 51 50 49 60 63 62 61 56 59 58 57 52 55 54 53 32 35 34 33 44 47 46 45 40 43 42 41 36 39 38 37 16 19 18 17 28 31 30 29 24 27 26 25 20 23 22 21 NB. inverser indices
 rot=: 1 : '{{/@:(x#~4 4 4&#:)'
 alr=: 1 : '(x rot)"1 0&(i.64)' NB. all rotations
 NB. movement helpers
@@ -84,12 +85,12 @@ COAC=: {"1&pars/ 2{.ECMT NB. corner orbits and cosets
 EDAM=: _70(".L:0)\','&splitstring"1]2}.ECMT NB. edge and movements
 EDOR=: 0 8 2 11 5 6 9 7 10 4 1 3 NB. method edge order. change later
 perm=: (,"2 COAC{CORN)&((,CORN)}"1)
-cig3=: (8#i.6)-:0 1 2 1 2 0{~face
+cig3=: (4#0 1)-:4&<:
 orbo=: 3 : 0
  i=. 1 i.~ (#COMT)>j=. (COMT get <)"1 (crt alr)&.:<: orbi y
  y=. y sper MOVS{~i (mrt rot)~ MOVS i. comi 1{::COMT{~i{j
- E=. EDAM{~1 i.~ COAC oig3"1@:{ i(crt rot inv)~CORN pati y
- i(ert rot inv)~EDOR{~FBSL i.~ EDGE{y
+ E=. EDAM{~1 i.~ COAC cig3"1@:{ (i{INV)(crt rot)~CORN pati y
+ (i{INV)(ert rot)~EDOR{~FBSL i.~&:(/:~"1) EDGE{y
  NB. (i{y) sper inv comi 1{::E{~({."1 E)i.<10#./:~>:EDOR{~FBSL i.~ EDGE{i{y
 )
 
