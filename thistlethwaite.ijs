@@ -88,8 +88,8 @@ cig3=: (8#i.6)-:0 1 2 1 2 0{~face
 orbo=: 3 : 0
  i=. 1 i.~ (#COMT)>j=. (COMT get <)"1 (crt alr)&.:<: orbi y
  y=. y sper MOVS{~i (mrt rot)~ MOVS i. comi 1{::COMT{~i{j
- E=. EDAM{~1 i.~ COAC oig3"1@:{ i (crt rot inv)~ CORN pati cube2
-
+ E=. EDAM{~1 i.~ COAC oig3"1@:{ i(crt rot inv)~CORN pati y
+ i(ert rot inv)~EDOR{~FBSL i.~ EDGE{y
  NB. (i{y) sper inv comi 1{::E{~({."1 E)i.<10#./:~>:EDOR{~FBSL i.~ EDGE{i{y
 )
 
