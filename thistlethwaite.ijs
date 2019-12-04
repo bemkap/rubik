@@ -83,15 +83,15 @@ ECMT=: 'm'fread'./s4table'
 pars=: C.&(i.8)S:1@:(<:@:".L:0)@:(';'&splitstring&.>)@:(','&splitstring)
 COAC=: {"1&pars/ 2{.ECMT NB. corner orbits and cosets
 EDAM=: _70(".L:0)\','&splitstring"1]2}.ECMT NB. edge and movements
-EDOR=: 0 8 2 11 5 6 9 7 10 4 1 3 NB. method edge order. change later
+EDOR=: 0 10 2 11 9 4 5 7 1 6 8 3{EDGE
 perm=: (,"2 COAC{CORN)&((,CORN)}"1)
 cig3=: (4#0 1)-:4&<:
 orbo=: 3 : 0
  i=. 1 i.~ (#COMT)>j=. (COMT get <)"1 (crt alr)&.:<: orbi y
- y=. y sper MOVS{~i (mrt rot)~ MOVS i. comi 1{::COMT{~i{j
+ y=. y sper MOVS{~i(mrt rot)~MOVS i. comi 1{::COMT{~i{j
  E=. EDAM{~1 i.~ COAC cig3"1@:{ (i{INV)(crt rot)~CORN pati y
- (i{INV)(ert rot)~EDOR{~FBSL i.~&:(/:~"1) EDGE{y
- NB. (i{y) sper inv comi 1{::E{~({."1 E)i.<10#./:~>:EDOR{~FBSL i.~ EDGE{i{y
+ k=. E get <10#./:~>:i(ert rot)~(EDOR{~0 1 2 3(ert rot)i)i.~&:(/:~"1)EDOR{y
+ NB. y sper inv MOVS{~i(mrt rot)~MOVS i. comi 1{::k{E
 )
 
 test=: cube sper inv 'flRddbbuffddlRfrrfbbrBrrbrbLuuRuuddrrddLfflddLllrrbbrrffrrdduubbuurruurruu'
