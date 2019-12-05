@@ -33,7 +33,7 @@ B=: cube C.inv~ 32 34 39 37;33 36 38 35;2 8 45 31;1 11 46 28;0 13 47 26
 S=: (,cube{inv~])L,R,F,B,U,:D
 NB. rotations
 crt=: 4 5 7 6 1 0 2 3,4 6 5 7 3 1 2 0,:5 6 7 4 1 2 3 0
-mrt=: 5 4 2 3 0 1 11 10 8 9 6 7,3 2 0 1 4 5 9 8 6 7 10 11,:0 1 5 4 2 3 6 7 11 10 8 9
+mrt=: 0 1 5 4 2 3 6 7 11 10 8 9,2 3 1 0 4 5 8 9 7 6 10 11,:5 4 2 3 0 1 11 10 8 9 6 7
 ert=: 5 4 6 7 0 1 3 2 9 10 11 8,8 9 11 10 5 6 7 4 2 3 1 0,:1 3 0 2 10 9 8 11 5 6 7 4
 INV=: 0 3 2 1 12 15 14 13 8 11 10 9 4 7 6 5 48 51 50 49 60 63 62 61 56 59 58 57 52 55 54 53 32 35 34 33 44 47 46 45 40 43 42 41 36 39 38 37 16 19 18 17 28 31 30 29 24 27 26 25 20 23 22 21 NB. inverser indices
 rot=: 1 : '{{/@:(x#~4 4 4&#:)'
@@ -88,10 +88,10 @@ perm=: (,"2 COAC{CORN)&((,CORN)}"1)
 cig3=: (4#0 1)-:4&<:
 orbo=: 3 : 0
  i=. 1 i.~ (#COMT)>j=. (COMT get <)"1 (crt alr)&.:<: orbi y
- y=. y sper MOVS{~i(mrt rot)~MOVS i. comi 1{::COMT{~i{j
+ y=. y sper MOVS{~(i{INV)(mrt rot)~MOVS i. comi 1{::COMT{~i{j
  E=. EDAM{~1 i.~ COAC cig3"1@:{ (i{INV)(crt rot)~CORN pati y
- k=. E get <10#./:~>:i(ert rot)~(EDOR{~0 1 2 3(ert rot)i)i.~&:(/:~"1)EDOR{y
- NB. y sper inv MOVS{~i(mrt rot)~MOVS i. comi 1{::k{E
+ NB. k=. E get <10#./:~>:i(ert rot)~(EDOR{~0 1 2 3(ert rot)i)i.~&:(/:~"1)EDOR{y
+ NB. y sper inv MOVS{~(i{INV)(mrt rot)~MOVS i. comi 1{::k{E
 )
 
 test=: cube sper inv 'flRddbbuffddlRfrrfbbrBrrbrbLuuRuuddrrddLfflddLllrrbbrrffrrdduubbuurruurruu'
