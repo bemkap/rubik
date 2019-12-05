@@ -87,12 +87,14 @@ EDOR=: 0 10 2 11 9 4 5 7 1 6 8 3{EDGE
 perm=: (,"2 COAC{CORN)&((,CORN)}"1)
 cig3=: (4#0 1)-:4&<:
 orbo=: 3 : 0
- i=. 1 i.~ (#COMT)>j=. (COMT get <)"1 (crt alr)&.:<: orbi y
- y=. y sper MOVS{~(i{INV)(mrt rot)~MOVS i. comi 1{::COMT{~i{j
- E=. EDAM{~1 i.~ COAC cig3"1@:{ (i{INV)(crt rot)~CORN pati y
- NB. k=. E get <10#./:~>:i(ert rot)~(EDOR{~0 1 2 3(ert rot)i)i.~&:(/:~"1)EDOR{y
- NB. y sper inv MOVS{~(i{INV)(mrt rot)~MOVS i. comi 1{::k{E
+ NB. i=. 1 i.~ (#COMT)>j=. (COMT get <)"1 (crt alr)&.:<: orbi y
+ NB. y=. y sper MOVS{~(i{INV)(mrt rot)~MOVS i. comi 1{::COMT{~i{j
+ i=. 48
+ E=. EDAM{~1 i.~ COAC cig3"1@:{ i(crt rot)~CORN pati y
+ k=. E get <10#./:~>:i(ert rot)~(EDOR{~0 1 2 3(ert rot)i)i.~&:(/:~"1)EDOR{y
+ y sper inv MOVS{~(i{INV)(mrt rot)~MOVS i. comi 1{::k{E
 )
 
 test=: cube sper inv 'flRddbbuffddlRfrrfbbrBrrbrbLuuRuuddrrddLfflddLllrrbbrrffrrdduubbuurruurruu'
 cube1=: coro eor test
+y=: test sper 'flRddbbuffddlRfrrfbbrBrrbrbLuu'
