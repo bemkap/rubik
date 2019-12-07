@@ -35,7 +35,7 @@ NB. rotations
 crt=: 4 5 7 6 1 0 2 3,4 6 5 7 3 1 2 0,:5 6 7 4 1 2 3 0
 mrt=: 0 1 5 4 2 3 6 7 11 10 8 9,2 3 1 0 4 5 8 9 7 6 10 11,:5 4 2 3 0 1 11 10 8 9 6 7
 ert=: 5 4 6 7 0 1 3 2 9 10 11 8,8 9 11 10 5 6 7 4 2 3 1 0,:1 3 0 2 10 9 8 11 5 6 7 4
-INV=: 0 3 2 1 12 15 14 13 8 11 10 9 4 7 6 5 48 51 50 49 60 63 62 61 56 59 58 57 52 55 54 53 32 35 34 33 44 47 46 45 40 43 42 41 36 39 38 37 16 19 18 17 28 31 30 29 24 27 26 25 20 23 22 21 NB. inverser indices
+INV=: 0 3 2 1 12 15 14 13 8 11 10 9 4 7 6 5 48 51 50 49 60 63 62 61 56 59 58 57 52 55 54 53 32 35 34 33 44 47 46 45 40 43 42 41 36 39 38 37 16 19 18 17 28 31 30 29 24 27 26 25 20 23 22 21 NB. inverse indices
 rot=: 1 : '{{/@:(x#~4 4 4&#:)'
 alr=: 1 : '(x rot)"1 0&(i.64)' NB. all rotations
 NB. movement helpers
@@ -87,15 +87,14 @@ EDOR=: 0 10 2 11 9 4 5 7 1 6 8 3{EDGE
 perm=: (,"2 COAC{CORN)&((,CORN)}"1)
 cig3=: (4#0 1)-:4&<:
 orbo=: 3 : 0
- NB. i=. 1 i.~ (#COMT)>j=. (COMT get <)"1 (crt alr)&.:<: orbi y
- NB. y=. y sper MOVS{~(i{INV)(mrt rot)~MOVS i. comi 1{::COMT{~i{j
- NB. r=. (((a:,0 4;0 1 6 7){::~-:@:#) i.~ (crt alr)) <:orbi y
- NB. E=. EDAM{~1 i.~ COAC cig3"1@:{ C.(crt rot)&r L:0 C.CORN pati y
- 
- NB. k=. E get <10#./:~>:i(ert rot)~(EDOR{~0 1 2 3(ert rot)i)i.~&:(/:~"1)EDOR{y
- NB. y sper inv MOVS{~(i{INV)(mrt rot)~MOVS i. comi 1{::k{E
+ AR=. 0 2 8 10 16 18 24 26 32 34 40 42 48 50 56 58
+ i =. 1 i.~ (#COMT)>j=. (COMT get <)"1 (crt rot)"1 0&AR&.:<: orbi y
+ y =. y sper MOVS{~(i{INV)(mrt rot)~MOVS i. comi 1{::COMT{~i{j
+ r =. AR{~(((a:,0 4;0 1 6 7){::~-:@:#)(i.~(/:~"1))(crt rot)"1 0&AR)<:orbi y
+ E =. EDAM{~1 i.~ COAC cig3"1@:{ C.(crt rot)&r L:0 C.CORN pati y
+ k =. E get <10#./:~>:r(ert rot)~(EDOR{~0 1 2 3(ert rot)r)i.~&:(/:~"1)EDOR{y
+ y sper inv MOVS{~(r{INV)(mrt rot)~MOVS i. comi 1{::k{E
 )
 
 test=: cube sper inv 'flRddbbuffddlRfrrfbbrBrrbrbLuuRuuddrrddLfflddLllrrbbrrffrrdduubbuurruurruu'
-cube1=: coro eor test
-y=: test sper 'flRddbbuffddlRfrrfbbrBrrbrbLuu'
+cube1=: orbo coro eor test
