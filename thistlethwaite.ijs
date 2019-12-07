@@ -87,7 +87,7 @@ EDOR=: 0 10 2 11 9 4 5 7 1 6 8 3{EDGE
 perm=: (,"2 COAC{CORN)&((,CORN)}"1)
 cig3=: (4#0 1)-:4&<:
 orbo=: 3 : 0
- AR=. 0 2 8 10 16 18 24 26 32 34 40 42 48 50 56 58
+ AR=. 0 2 8 10 16 18 24 26 32 34 40 42 48 50 56 58 NB. rotations that dont mess up the twists
  i =. 1 i.~ (#COMT)>j=. (COMT get <)"1 (crt rot)"1 0&AR&.:<: orbi y
  y =. y sper MOVS{~(i{INV)(mrt rot)~MOVS i. comi 1{::COMT{~i{j
  r =. AR{~(((a:,0 4;0 1 6 7){::~-:@:#)(i.~(/:~"1))(crt rot)"1 0&AR)<:orbi y
@@ -95,6 +95,9 @@ orbo=: 3 : 0
  k =. E get <10#./:~>:r(ert rot)~(EDOR{~0 1 2 3(ert rot)r)i.~&:(/:~"1)EDOR{y
  y sper inv MOVS{~(r{INV)(mrt rot)~MOVS i. comi 1{::k{E
 )
+NB. last phase
+LETA=: 'm'fread'./s5table'
 
 test=: cube sper inv 'flRddbbuffddlRfrrfbbrBrrbrbLuuRuuddrrddLfflddLllrrbbrrffrrdduubbuurruurruu'
 cube1=: orbo coro eor test
+y=: test sper 'flRddbbuffddlRfrrfbbrBrrbrbLuuRuuddrrddLfflddLllrr'
