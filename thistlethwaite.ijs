@@ -69,7 +69,7 @@ ctmi=: (;:'l ll L f ff F r rr R b bb B uu dd');@:{~11 12 13 21 22 23 31 32 33 41
 CTMT=: ".L:0','splitstring"1'm'fread'./s2table' NB. corners twist movements table
 twst=: 1 3 (e.~i.1:)"1 CORN&gface
 coro=: (3 : 0)@:,:
- while. *./i=. ((LRSL gface cube)([:+./-.@:e.&:(/:~"1))UDSL&gface)"1 y do. y=. G1 ap y end.
+ while. *./i=. +./@:-.@:(LRSL e.&:(/:~"1) UDSL&{)"1 y do. y=. G2 ap y end.
  y=. ,:y{~i i. 0
  P=. >1{"1 CTMT
  while. (#y)=i=. 1 i.~ (#P)>j=. P i. twst"1 y do. y=. G3 ap y end.
@@ -84,7 +84,6 @@ pars=: C.&(i.8)S:1@:(<:@:".L:0)@:(';'&splitstring&.>)@:(','&splitstring)
 COAC=: {"1&pars/ 2{.ECMT NB. corner orbits and cosets
 EDAM=: _70(".L:0)\','&splitstring"1]2}.ECMT NB. edge and movements
 EDOR=: 0 10 2 11 9 4 5 7 1 6 8 3{EDGE
-perm=: (,"2 COAC{CORN)&((,CORN)}"1)
 cig3=: (4#0 1)-:4&<:
 orbo=: 3 : 0
  AR=. 0 2 8 10 16 18 24 26 32 34 40 42 48 50 56 58 NB. rotations that dont mess up the twists
@@ -95,8 +94,11 @@ orbo=: 3 : 0
  k =. E get <10#./:~>:r(ert rot)~(EDOR{~0 1 2 3(ert rot)r)i.~&:(/:~"1)EDOR{y
  y sper inv MOVS{~(r{INV)(mrt rot)~MOVS i. comi 1{::k{E
 )
-NB. last phase
-LETA=: 'm'fread'./s5table'
+NB. edge permutation
+LETA=: 'b'fread'./s5table'
+pars1=: 3 : '(i.4)C.~(4|_1+10&#.inv) each boxopen ".}.}: ('')('';'';'')&stringreplace y'
+EPTA=: ((".L:0@:{.),pars1 L:0@:}.)"1 ','&splitstring S:0 LETA
+
 
 test=: cube sper inv 'flRddbbuffddlRfrrfbbrBrrbrbLuuRuuddrrddLfflddLllrrbbrrffrrdduubbuurruurruu'
 cube1=: orbo coro eor test
