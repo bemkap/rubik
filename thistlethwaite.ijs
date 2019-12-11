@@ -13,11 +13,10 @@ pati =: 4 : 'cube i.&(/:~"1@:(x&gface)) y'
 get  =: {."1@:[i.]
 NB. graphical view of the cube
 COLORS =: 0 0 0,255 128 0,0 0 255,255 0 0,255 255 0,255 255 255,:0 255 0
-HUE0   =: 0 1 2 3 4 5 6{COLORS NB. mine
 HUE1   =: 0 4 2 3 6 1 5{COLORS NB. standard
 HUE2   =: 0 1 6 5 2 4 3{COLORS NB. simulator
 display=: 3 : 0
- HUE0 display y
+ HUE1 display y
  :
  c=. >:4(3 3${.,_1:,}.)"1 face 6 8$y
  c=. ,/_4,./\(12 3 3$0)1 4 5 6 7 9}~c
@@ -100,9 +99,7 @@ pars1=: 3 : '(i.4)C.~(4|_1+10&#.inv) each boxopen ".}.}: ('')('';'';'') stringre
 EPTA =: ((".L:0@:{.),pars1 L:0@:}.)"1 ','&splitstring S:0 LETA
 PS   =: ((4#0 4 8)(+;)}.)"1 EPTA
 
-
 test=: cube sper inv 'flRddbbuffddlRfrrfbbrBrrbrbLuuRuuddrrddLfflddLllrrbbrrffrrdduubbuurruurruu'
 cube1=: orbo coro eor test
 y=: test sper 'flRddbbuffddlRfrrfbbrBrrbrbLuuRuuddrrddLfflddLllrr'
-cc=: C.@:(4 | _4 ]\ ])
-NB. cc(4#.0 0 0)(ert rot)~((<2 3)C.EDOR)([i.~&:(/:~"1){)y
+cc=: C.@:(4|_4]\])
