@@ -85,21 +85,24 @@ COAC=: {"1&pars/ 2{.ECMT NB. corner orbits and cosets
 EDAM=: _70(".L:0)\','&splitstring"1]2}.ECMT NB. edge and movements
 EDOR=: 0 10 2 11 9 4 5 7 1 6 8 3{EDGE
 cig3=: (4#0 1)-:4&<:
+TIR =: 0 2 8 10 16 18 24 26 32 34 40 42 48 50 56 58 NB. twist invariant rotations
 orbo=: 3 : 0
- AR=. 0 2 8 10 16 18 24 26 32 34 40 42 48 50 56 58 NB. rotations that dont mess up the twists
- i =. 1 i.~ (#COMT)>j=. (COMT get <)"1 (crt rot)"1 0&AR&.:<: orbi y
- y =. y sper MOVS{~(i{INV)(mrt rot)~MOVS i. comi 1{::COMT{~i{j
- r =. AR{~(((a:,0 4;0 1 6 7){::~-:@:#)(i.~(/:~"1))(crt rot)"1 0&AR)<:orbi y
- E =. EDAM{~1 i.~ COAC cig3"1@:{ C.(crt rot)&r L:0 C.CORN pati y
- k =. E get <10#./:~>:r(ert rot)~(EDOR{~0 1 2 3(ert rot)r)i.~&:(/:~"1)EDOR{y
+ i=. 1 i.~ (#COMT)>j=. (COMT get <)"1 (crt rot)"1 0&TIR&.:<: orbi y
+ y=. y sper MOVS{~(i{INV)(mrt rot)~MOVS i. comi 1{::COMT{~i{j
+ r=. TIR{~(((a:,0 4;0 1 6 7){::~-:@:#)(i.~(/:~"1))(crt rot)"1 0&TIR)<:orbi y
+ E=. EDAM{~1 i.~ COAC cig3"1@:{ C.(crt rot)&r L:0 C.CORN pati y
+ k=. E get <10#./:~>:r(ert rot)~(EDOR{~0 1 2 3(ert rot)r)i.~&:(/:~"1)EDOR{y
  y sper inv MOVS{~(r{INV)(mrt rot)~MOVS i. comi 1{::k{E
 )
 NB. edge permutation
-LETA=: 'b'fread'./s5table'
-pars1=: 3 : '(i.4)C.~(4|_1+10&#.inv) each boxopen ".}.}: ('')('';'';'')&stringreplace y'
-EPTA=: ((".L:0@:{.),pars1 L:0@:}.)"1 ','&splitstring S:0 LETA
+LETA =: 'b'fread'./s5table'
+pars1=: 3 : '(i.4)C.~(4|_1+10&#.inv) each boxopen ".}.}: ('')('';'';'') stringreplace y'
+EPTA =: ((".L:0@:{.),pars1 L:0@:}.)"1 ','&splitstring S:0 LETA
+PS   =: ((4#0 4 8)(+;)}.)"1 EPTA
 
 
 test=: cube sper inv 'flRddbbuffddlRfrrfbbrBrrbrbLuuRuuddrrddLfflddLllrrbbrrffrrdduubbuurruurruu'
 cube1=: orbo coro eor test
 y=: test sper 'flRddbbuffddlRfrrfbbrBrrbrbLuuRuuddrrddLfflddLllrr'
+cc=: C.@:(4 | _4 ]\ ])
+NB. cc(4#.0 0 0)(ert rot)~((<2 3)C.EDOR)([i.~&:(/:~"1){)y
