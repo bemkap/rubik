@@ -98,8 +98,11 @@ LETA =: 'b'fread'./s5table'
 pars1=: 3 : '(i.4)C.~(4|_1+10&#.inv) each boxopen ".}.}: ('')('';'';'') stringreplace y'
 EPTA =: ((".L:0@:{.),pars1 L:0@:}.)"1 ','&splitstring S:0 LETA
 PS   =: ((4#0 4 8)(+;)}.)"1 EPTA
+MMM  =: (;:'ll ff rr bb uu dd');@:{~<:
+edpe=: 3 : 0
+ i=. 1 i.~ 64>j=. cube i.~"1 2 k=. (y sper inv"1 MOVS{~MOVS(mrt alr)@:i.MMM)S:0 {."1 EPTA
+ (i{j){i{k
+)
 
-test=: cube sper inv 'flRddbbuffddlRfrrfbbrBrrbrbLuuRuuddrrddLfflddLllrrbbrrffrrdduubbuurruurruu'
+test =: cube sper inv 'flRddbbuffddlRfrrfbbrBrrbrbLuuRuuddrrddLfflddLllrrbbrrffrrdduubbuurruurruu'
 cube1=: orbo coro eor test
-y=: test sper 'flRddbbuffddlRfrrfbbrBrrbrbLuuRuuddrrddLfflddLllrr'
-cc=: C.@:(4|_4]\])
