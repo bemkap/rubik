@@ -87,7 +87,11 @@ coro=: 3 : 0
  y sper inv MOVS{~(rnv j)(mrt rot)~MOVS i. ctmi 0{::CTMT{~j{i NB. apply movement to restore twists
 )
 NB. corner orbit
+alr1=: 2 : '(m {/@:{L:0 n){~&.>]'
 COMT=: ".L:0'|'&splitstring"1'm'fread'./s3table' NB. corners orbit movement table
+OPAT=: /:~L:0 ,(ROT alr1 crt)"0 <:L:0 {."1 COMT
+MOVI=: ,(ROT alr1 mrt)"0 <:L:0 {:"1 COMT
+
 ECMT=: 'm'fread'./s4table'
 par2=: C.&(i.8)S:1@:(<:@:".L:0)@:(';'&splitstring&.>)@:(','&splitstring)
 COAC=: {"1&par2/ 2{.ECMT NB. corner orbits and cosets
@@ -96,17 +100,16 @@ orbi=: (4#0 1)>:@:I.@:~:4<:CORN&pati NB. bad orbits
 comi=: (MOVS&i.L:0;:'l ll L ff r rr R bb uu dd');@:{~<: NB. corner orbits movement indices
 EDOR=: 0 10 2 11 9 4 5 7 1 6 8 3{EDGE NB. method edge order
 cig3=: (4#0 1)-:4&<: NB. in g3?
-TIRO=: ROT # ~+:/1 2(2|+/@:=)S:0"0 1 ROT NB. twist invariant rotations
+TIRO=: ROT#~+:/1 2(2|+/@:=)S:0"0 1 ROT NB. twist invariant rotations
 orbo=: 3 : 0
- i=. 1 i.~ (#COMT)>j=. ({."1 COMT)i.({/@:{&crt L:0 ROT)/:~@:>:@:{~L:0<:orbi y
- 
-orbo=: 3 : 0
- i=. 1 i.~ (#COMT)>j=. ({."1 COMT)i.;//:~"1(crt rot)"1 0&TIRO&.:<:orbi y NB. look up in COMT table
- y=. y sper MOVS{~(rnv i)(mrt rot)~MOVS i. comi 1{::COMT{~i{j
- r=. TIRO{~(((a:,0 4;0 1 6 7){::~-:@:#)(i.~(/:~"1))(crt rot)"1 0&TIRO)<:orbi y
- E=. EDAM{~1 i.~ COAC cig3"1@:{ C.(crt rot)&r L:0 C.CORN pati y
- k=. E get <10#./:~>:r(ert rot)~(EDOR{~0 1 2 3(ert rot)r)i.~&:(/:~"1)EDOR{y
- y sper inv MOVS{~(rnv r)(mrt rot)~MOVS i. comi 1{::k{E
+ y=. y (S dper) MOVI{::~OPAT i. <<:orbi y
+NB. orbo=: 3 : 0
+NB.  i=. 1 i.~ (#COMT)>j=. ({."1 COMT)i.;//:~"1(crt rot)"1 0&TIRO&.:<:orbi y NB. look up in COMT table
+NB.  y=. y sper MOVS{~(rnv i)(mrt rot)~MOVS i. comi 1{::COMT{~i{j
+NB.  r=. TIRO{~(((a:,0 4;0 1 6 7){::~-:@:#)(i.~(/:~"1))(crt rot)"1 0&TIRO)<:orbi y
+NB.  E=. EDAM{~1 i.~ COAC cig3"1@:{ C.(crt rot)&r L:0 C.CORN pati y
+NB.  k=. E get <10#./:~>:r(ert rot)~(EDOR{~0 1 2 3(ert rot)r)i.~&:(/:~"1)EDOR{y
+NB.  y sper inv MOVS{~(rnv r)(mrt rot)~MOVS i. comi 1{::k{E
 )
 NB. edge permutation
 LETA =: 'b'fread'./s5table'
