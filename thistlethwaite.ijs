@@ -35,7 +35,8 @@ crt=: 4 5 7 6 1 0 2 3,4 6 5 7 3 1 2 0,:5 6 7 4 1 2 3 0
 mrt=: 0 1 5 4 2 3 6 7 11 10 8 9,2 3 1 0 4 5 8 9 7 6 10 11,:5 4 2 3 0 1 11 10 8 9 6 7
 ert=: 5 4 6 7 0 1 3 2 9 10 11 8,8 9 11 10 5 6 7 4 2 3 1 0,:1 3 0 2 10 9 8 11 5 6 7 4
 rnv=: (4|4&-)&.(4 4 4&#:)
-ROT=: ,L:0 a:;0;1;2;0 2;1 1;1 2;2 2;0 0 0;0 2 2;1 1 1;1 1 2;1 2 2;1 2 2;0 0 0 2;0 2 2 2;1 1 1 2;1 1 2 2;1 2 2 2;0 0 0 2 2;1 1 1 2 2;1 1 2 2 2;0 0 0 2 2 2;1 1 1 2 2 2
+ROT=: ,L:0 a:,2;2 2;2 2 2;1;1 2;1 2 2;1 2 2 2;1 1;1 1 2;1 1 2 2;1 1 2 2 2;1 1 1;1 1 1 2 ;1 1 1 2 2;1 1 1 2 2 2;0;0 2;0 2 2;0 2 2 2;0 0 0;0 0 0 2;0 0 0 2 2;0 0 0 2 2 2
+INV=: 0 3 2 24 12 15 14 13 8 11 10 9 24 7 6 5 20 23 22 21 24 19 18 17
 
 rot=: 1 : '{{/@:(x#~4 4 4&#:)'
 alr=: 1 : '(x rot)"1 0&(i.64)' NB. all rotations
@@ -92,10 +93,13 @@ par2=: C.&(i.8)S:1@:(<:@:".L:0)@:(';'&splitstring&.>)@:(','&splitstring)
 COAC=: {"1&par2/ 2{.ECMT NB. corner orbits and cosets
 EDAM=: _70(".L:0)\','&splitstring"1]2}.ECMT NB. edge and movements
 orbi=: (4#0 1)>:@:I.@:~:4<:CORN&pati NB. bad orbits
-comi=: (;:'l ll L ff r rr R bb uu dd');@:{~<: NB. corner orbits movement indices
+comi=: (MOVS&i.L:0;:'l ll L ff r rr R bb uu dd');@:{~<: NB. corner orbits movement indices
 EDOR=: 0 10 2 11 9 4 5 7 1 6 8 3{EDGE NB. method edge order
 cig3=: (4#0 1)-:4&<: NB. in g3?
-TIRO=: 0 2 8 10 16 18 24 26 32 34 40 42 48 50 56 58 NB. twist invariant rotations
+TIRO=: ROT # ~+:/1 2(2|+/@:=)S:0"0 1 ROT NB. twist invariant rotations
+orbo=: 3 : 0
+ i=. 1 i.~ (#COMT)>j=. ({."1 COMT)i.({/@:{&crt L:0 ROT)/:~@:>:@:{~L:0<:orbi y
+ 
 orbo=: 3 : 0
  i=. 1 i.~ (#COMT)>j=. ({."1 COMT)i.;//:~"1(crt rot)"1 0&TIRO&.:<:orbi y NB. look up in COMT table
  y=. y sper MOVS{~(rnv i)(mrt rot)~MOVS i. comi 1{::COMT{~i{j
@@ -115,15 +119,5 @@ edpe=: 3 : 0
  (i{j){i{k
 )
 
-NB. test =: cube sper inv 'flRddbbuffddlRfrrfbbrBrrbrbLuuRuuddrrddLfflddLllrrbbrrffrrdduubbuurruurruu'
-NB. cube1=: orbo coro eor test
-NB. y    =: test sper 'flRddbbuffddlRfrrfbbrBrrbrbLuuRuuddrrddLfflddLllrr'
-
-NB. exaustive eor. optimal solution but slow
-NB. eor1=: 3 : 0
-NB.  m=. ,.i.6
-NB.  o=. +/orie y
-NB.  while. 12>o do.
-NB.   m=. m#~t(=+.8=[)o=. >./t=. y +/@:orie@:dper"1 m=. ([:,/,"1 0/&(i.6)) m
-NB.  end.({~(12 i.~ +/@:orie"1))y dper"1 m
-NB. )
+test =: cube sper inv 'flRddbbuffddlRfrrfbbrBrrbrbLuuRuuddrrddLfflddLllrrbbrrffrrdduubbuurruurruu'
+cube1=: coro eor test
