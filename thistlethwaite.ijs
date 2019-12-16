@@ -1,15 +1,6 @@
 NB. rubik's cube solver
 NB. thistlethwaite method
 require'viewmat ./rubik.ijs'
-NB. rotations
-crt=: 4 5 7 6 1 0 2 3,4 6 5 7 3 1 2 0,:5 6 7 4 1 2 3 0 NB. corner rotations
-mrt=: 0 1 5 4 2 3 6 7 11 10 8 9,2 3 1 0 4 5 8 9 7 6 10 11,:5 4 2 3 0 1 11 10 8 9 6 7 NB. movement rotations
-ert=: 5 4 6 7 0 1 3 2 9 10 11 8,8 9 11 10 5 6 7 4 2 3 1 0,:1 3 0 2 10 9 8 11 5 6 7 4 NB. edge rotations
-Crt=: (L{inv R),(U{inv D),:F{inv B NB. cube rotations
-ROT=: ,L:0 a:,2;2 2;2 2 2;1;1 2;1 2 2;1 2 2 2;1 1;1 1 2;1 1 2 2;1 1 2 2 2;1 1 1;1 1 1 2 ;1 1 1 2 2;1 1 1 2 2 2;0;0 2;0 2 2;0 2 2 2;0 0 0;0 0 0 2;0 0 0 2 2;0 0 0 2 2 2
-INV=: 0 3 2 24 12 15 14 13 8 11 10 9 24 7 6 5 20 23 22 21 24 19 18 17
-rot=: 1 : '{{/@:(x#~4 4 4&#:)'
-alr=: 2 : '(m {/@:{L:0 n){~&.>]'
 NB. sets
 G0=: S
 G1=: L,R,(U{U),(D{D),F,:B
@@ -43,7 +34,7 @@ coro=: 3 : 0
   m=. ([:,/,"1 0/&(i.6))m
  end.
  y=. y (G1 dper) m{~1 i.~ i+.j
- j=. 1 i.~(#CTMT)>i=. (1 {::"1 CTMT)i.twst S:0(ROT alr Crt)<y NB. look up in CTMT table
+ j=. 1 i.~(#CTMT)>1i=. (1 {::"1 CTMT)i.twst S:0(ROT alr Crt)<y NB. look up in CTMT table
  y (S dper inv) (j{INV)(mrt rot)~ctmi 0{::CTMT{~j{i NB. apply movement to restore twists
 )
 NB. corner orbit

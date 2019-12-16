@@ -3,7 +3,7 @@ cube =: i.48
 face =: <.@%&8
 ap   =: [:~.[:,/{"1/
 'u l f r b d'=: i.6
-MOVS =: 'lrfbudLRFBUD'
+MOVS =: 'lrfbudxyzmesLRFBUDXYZMES'
 gface=: face@:{
 pate =: 4 : '*./cube e.&(/:~"1@:(x&gface)) y'
 pati =: 4 : 'cube i.&(/:~"1@:(x&gface)) y'
@@ -25,8 +25,16 @@ U=: cube C.inv~ 0 2 7 5;1 4 6 3;8 32 24 16;9 33 25 17;10 34 26 18
 D=: cube C.inv~ 40 42 47 45;41 44 46 43;13 21 29 37;14 22 30 38;15 23 31 39
 F=: cube C.inv~ 16 18 23 21;17 20 22 19;5 24 42 15;6 27 41 12;7 29 40 10
 B=: cube C.inv~ 32 34 39 37;33 36 38 35;2 8 45 31;1 11 46 28;0 13 47 26
-S=: (,cube{inv~])L,R,F,B,U,:D
+NB. rotations
+X=: (1 17 41 38;6 22 46 33)C.L {inv R
+Y=: (11 19 27 35;12 20 28 36)C.D {inv U
+Z=: (4 30 43 9;3 25 44 14)C.F {inv B
+NB. reflections
+LR=: cube C.~ ;/(+&8,.+&24)i.8
+UD=: cube C.~ ;/(,.+&40)i.8
+FB=: cube C.~ ;/(+&16,.+&32)i.8
 NB. movement helpers
+S=: (,cube{inv~])L,R,F,B,U,D,X,Y,Z,LR,UD,:FB
 dper=: 1 : '({~m({/@:{)~|.@:,) :. ({~m({/@:{)~12|6+,)' NB. permute by index
 rper=: (S dper) ?@:($&12) NB. random permutation
 sper=: ((S dper)MOVS&i.) :. ((S dper)inv MOVS&i.) NB. permute by string
