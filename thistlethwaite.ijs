@@ -1,60 +1,20 @@
 NB. rubik's cube solver
 NB. thistlethwaite method
-require'viewmat'
-NB. cube representation and helper verbs
-cube =: i.48
-face =: <.@%&8
-ap   =: [:~.[:,/{"1/
-'u l f r b d'=: i.6
-MOVS =: 'lrfbudLRFBUD'
-gface=: face@:{
-pate =: 4 : '*./cube e.&(/:~"1@:(x&gface)) y'
-pati =: 4 : 'cube i.&(/:~"1@:(x&gface)) y'
-get  =: {."1@:[i.]
-NB. graphical view of the cube
-COLORS =: 0 0 0,255 128 0,0 0 255,255 0 0,255 255 0,255 255 255,:0 255 0
-HUE1   =: 0 4 2 3 6 1 5{COLORS NB. standard
-HUE2   =: 0 1 6 5 2 4 3{COLORS NB. simulator
-display=: 3 : 0
- HUE1 display y
- :
- c=. >:4(3 3${.,_1:,}.)"1 face 6 8$y
- c=. ,/_4,./\(12 3 3$0)1 4 5 6 7 9}~c
- x viewmat c
-)
-NB. movements permutations
-R=: cube C.inv~ 24 26 31 29;25 28 30 27;2 37 42 18;4 35 44 20;7 32 47 23
-L=: cube C.inv~ 8 10 15 13;9 12 14 11;0 16 40 39;3 19 43 36;5 21 45 34
-U=: cube C.inv~ 0 2 7 5;1 4 6 3;8 32 24 16;9 33 25 17;10 34 26 18
-D=: cube C.inv~ 40 42 47 45;41 44 46 43;13 21 29 37;14 22 30 38;15 23 31 39
-F=: cube C.inv~ 16 18 23 21;17 20 22 19;5 24 42 15;6 27 41 12;7 29 40 10
-B=: cube C.inv~ 32 34 39 37;33 36 38 35;2 8 45 31;1 11 46 28;0 13 47 26
-S=: (,cube{inv~])L,R,F,B,U,:D
+require'viewmat ./rubik.ijs'
 NB. rotations
-crt=: 4 5 7 6 1 0 2 3,4 6 5 7 3 1 2 0,:5 6 7 4 1 2 3 0
-mrt=: 0 1 5 4 2 3 6 7 11 10 8 9,2 3 1 0 4 5 8 9 7 6 10 11,:5 4 2 3 0 1 11 10 8 9 6 7
-ert=: 5 4 6 7 0 1 3 2 9 10 11 8,8 9 11 10 5 6 7 4 2 3 1 0,:1 3 0 2 10 9 8 11 5 6 7 4
-rnv=: (4|4&-)&.(4 4 4&#:)
+crt=: 4 5 7 6 1 0 2 3,4 6 5 7 3 1 2 0,:5 6 7 4 1 2 3 0 NB. corner rotations
+mrt=: 0 1 5 4 2 3 6 7 11 10 8 9,2 3 1 0 4 5 8 9 7 6 10 11,:5 4 2 3 0 1 11 10 8 9 6 7 NB. movement rotations
+ert=: 5 4 6 7 0 1 3 2 9 10 11 8,8 9 11 10 5 6 7 4 2 3 1 0,:1 3 0 2 10 9 8 11 5 6 7 4 NB. edge rotations
+Crt=: (L{inv R),(U{inv D),:F{inv B NB. cube rotations
 ROT=: ,L:0 a:,2;2 2;2 2 2;1;1 2;1 2 2;1 2 2 2;1 1;1 1 2;1 1 2 2;1 1 2 2 2;1 1 1;1 1 1 2 ;1 1 1 2 2;1 1 1 2 2 2;0;0 2;0 2 2;0 2 2 2;0 0 0;0 0 0 2;0 0 0 2 2;0 0 0 2 2 2
 INV=: 0 3 2 24 12 15 14 13 8 11 10 9 24 7 6 5 20 23 22 21 24 19 18 17
-
 rot=: 1 : '{{/@:(x#~4 4 4&#:)'
-alr=: 1 : '(x rot)"1 0&(i.64)' NB. all rotations
-NB. movement helpers
-dper=: 1 : '({~m({/@:{)~|.@:,) :. ({~m({/@:{)~12|6+,)' NB. permute by index
-rper=: (S dper) ?@:($&12) NB. random permutation
-sper=: ((S dper)MOVS&i.) :. ((S dper)inv MOVS&i.) NB. permute by string
-
+alr=: 2 : '(m {/@:{L:0 n){~&.>]'
 NB. sets
+G0=: S
 G1=: L,R,(U{U),(D{D),F,:B
 G2=: L,R,(U{U),(D{D),(F{F),:B{B
 G3=: (L{L),(R{R),(U{U),(D{D),(F{F),:B{B
-NB. indices
-EDGE=: 3 9,17 6,4 25,33 1,19 12,20 27,22 41,35 28,38 46,36 11,43 14,:44 30
-CORN=: 8 34 0,15 21 40,31 37 47,24 18 7,10 5 16,13 45 39,29 42 23,:26 2 32
-LRSL=: 1  6  3 8{EDGE
-UDSL=: 4  5  7 9{EDGE
-FBSL=: 0 10 11 2{EDGE
 NB. edge detection
 stor=: f,b,u,d,l,r NB. stickers order
 orie=: stor</"1@:i.EDGE&gface NB. orientation
@@ -72,55 +32,60 @@ eor=: ('u' sper~ mov^:pow)^:(1-*./@:orie)^:_
 NB. corner orientation
 par1=: (11 12 13 21 22 23 31 32 33 41 42 43 51 52&i.L:0@:{.,}.)"1@:(".L:0)
 CTMT=: par1 ','splitstring"1'm'fread'./s2table' NB. corners twist movement table
-ctmi=: ;@:{&(;:'l ll L f ff F r rr R b bb B uu dd') NB. corners twist movement indices
-twst=: 1 3 (e.~i.1:)"1 CORN&gface
+ctmi=: MOVS i. ;@:{&(;:'l ll L f ff F r rr R b bb B uu dd') NB. corners twist movement indices
+twst=: (l,r) (e.~i.1:)"1 CORN&gface
 coro=: 3 : 0
  m=. ,.i.6
  while. 1 do.
-  p=. +./i=. y (*./@:(LRSL e.&:(/:~"1) UDSL&{)@:(G1 dper))"1 m NB. all LR-slice in UD-slice
-  q=. +./j=. y (*./@:(LRSL e.&:(/:~"1)(0 2 8 11{EDGE)&{)@:(G1 dper))"1 m NB. all LR-slice in U-face
-  if. p+.q do. break. end.
+  i=. y (*./@:(LRSL e.&:(/:~"1) UDSL&{)@:(G1 dper))"1 m NB. all LR-slice in UD-slice
+  j=. y (*./@:(LRSL e.&:(/:~"1)(0 2 8 11{EDGE)&{)@:(G1 dper))"1 m NB. all LR-slice in U-face
+  if. i+.&(+./)j do. break. end.
   m=. ([:,/,"1 0/&(i.6))m
  end.
  y=. y (G1 dper) m{~1 i.~ i+.j
- j=. 1 i.~(#CTMT)>i=. (1 {::"1 CTMT)i.twst"1(((U{D),(L{R),:(F{B))alr)y NB. look up in CTMT table
- y sper inv MOVS{~(rnv j)(mrt rot)~MOVS i. ctmi 0{::CTMT{~j{i NB. apply movement to restore twists
+ j=. 1 i.~(#CTMT)>i=. (1 {::"1 CTMT)i.twst S:0(ROT alr Crt)<y NB. look up in CTMT table
+ y (S dper inv) (j{INV)(mrt rot)~ctmi 0{::CTMT{~j{i NB. apply movement to restore twists
 )
 NB. corner orbit
-alr1=: 2 : '(m {/@:{L:0 n){~&.>]'
 COMT=: ".L:0'|'&splitstring"1'm'fread'./s3table' NB. corners orbit movement table
-OPAT=: /:~L:0 ,(ROT alr1 crt)"0 <:L:0 {."1 COMT
-MOVI=: ,(ROT alr1 mrt)"0 <:L:0 {:"1 COMT
+comi=: (MOVS&i.L:0;:'l ll L ff r rr R bb uu dd');@:{~<: NB. corner orbits movement indices
+TIRO=: ROT#~cube-:"1/&(twst S:0)(ROT alr Crt)<cube
+NB. OPAT=: /:~L:0,(TIRO alr crt)"0 <:L:0 {."1 COMT
+OPAT=: <:L:0 {."1 COMT
+MOVI=: comi L:0 {:"1 COMT
 
 ECMT=: 'm'fread'./s4table'
-par2=: C.&(i.8)S:1@:(<:@:".L:0)@:(';'&splitstring&.>)@:(','&splitstring)
-COAC=: {"1&par2/ 2{.ECMT NB. corner orbits and cosets
+par2=: C.&(i.8)S:1@:(<:@:".L:0)@:(';'&splitstring L:0)@:(','&splitstring)
+COAC=: (ROT alr crt)"0;/{"1&par2/ 2{.ECMT NB. corner orbits and cosets
 EDAM=: _70(".L:0)\','&splitstring"1]2}.ECMT NB. edge and movements
-orbi=: (4#0 1)>:@:I.@:~:4<:CORN&pati NB. bad orbits
-comi=: (MOVS&i.L:0;:'l ll L ff r rr R bb uu dd');@:{~<: NB. corner orbits movement indices
+orbi=: (4#0 1)I.@:~:4<:CORN&pati NB. bad orbits
 EDOR=: 0 10 2 11 9 4 5 7 1 6 8 3{EDGE NB. method edge order
 cig3=: (4#0 1)-:4&<: NB. in g3?
-TIRO=: ROT#~+:/1 2(2|+/@:=)S:0"0 1 ROT NB. twist invariant rotations
 orbo=: 3 : 0
- y=. y (S dper) MOVI{::~OPAT i. <<:orbi y
-NB. orbo=: 3 : 0
-NB.  i=. 1 i.~ (#COMT)>j=. ({."1 COMT)i.;//:~"1(crt rot)"1 0&TIRO&.:<:orbi y NB. look up in COMT table
-NB.  y=. y sper MOVS{~(rnv i)(mrt rot)~MOVS i. comi 1{::COMT{~i{j
-NB.  r=. TIRO{~(((a:,0 4;0 1 6 7){::~-:@:#)(i.~(/:~"1))(crt rot)"1 0&TIRO)<:orbi y
-NB.  E=. EDAM{~1 i.~ COAC cig3"1@:{ C.(crt rot)&r L:0 C.CORN pati y
-NB.  k=. E get <10#./:~>:r(ert rot)~(EDOR{~0 1 2 3(ert rot)r)i.~&:(/:~"1)EDOR{y
-NB.  y sper inv MOVS{~(rnv r)(mrt rot)~MOVS i. comi 1{::k{E
-)
-NB. edge permutation
-LETA =: 'b'fread'./s5table'
-pars1=: 3 : '(i.4)C.~(4|_1+10&#.inv) each boxopen ".}.}: ('')('';'';'') stringreplace y'
-EPTA =: ((".L:0@:{.),pars1 L:0@:}.)"1 ','&splitstring S:0 LETA
-PS   =: ((4#0 4 8)(+;)}.)"1 EPTA
-MMM  =: (;:'ll ff rr bb uu dd');@:{~<:
-edpe=: 3 : 0
- i=. 1 i.~ 64>j=. cube i.~"1 2 k=. (y sper inv"1 MOVS{~MOVS(mrt alr)@:i.MMM)S:0 {."1 EPTA
- (i{j){i{k
-)
+ j=. 1 i.~ (#COMT)>i=. ({."1 COMT)i.,/:~L:0(ROT alr crt)<orbi y
 
-test =: cube sper inv 'flRddbbuffddlRfrrfbbrBrrbrbLuuRuuddrrddLfflddLllrrbbrrffrrdduubbuurruurruu'
-cube1=: coro eor test
+ NB. y=. y (S dper) MOVI{::~OPAT i. <orbi y
+ NB. E=. EDAM{~1 i.~ +./"1 cig3&>COAC{&.><CORN pati y
+ NB. y (S dper inv) comi 1{::E{~({."1 E)i.<10#./:~>:(EDOR{~i.4) pati y
+ NB. P=. /:~L:0,(ROT alr ert)"0]10&#.inv L:0 {."1 E
+ NB. M=. ,(ROT alr mrt)"0 comi L:0 {:"1 E
+ NB. y
+ 
+NB. NB.  r=. TIRO{~(((a:,0 4;0 1 6 7){::~-:@:#)(i.~(/:~"1))(crt rot)"1 0&TIRO)<:orbi y
+NB. NB.  E=. EDAM{~1 i.~ COAC cig3"1@:{ C.(crt rot)&r L:0 C.CORN pati y
+NB. NB.  k=. E get <10#./:~>:r(ert rot)~(EDOR{~0 1 2 3(ert rot)r)i.~&:(/:~"1)EDOR{y
+NB. NB.  y sper inv MOVS{~(rnv r)(mrt rot)~MOVS i. comi 1{::k{E
+NB. )
+NB. NB. edge permutation
+NB. LETA =: 'b'fread'./s5table'
+NB. pars1=: 3 : '(i.4)C.~(4|_1+10&#.inv) each boxopen ".}.}: ('')('';'';'') stringreplace y'
+NB. EPTA =: ((".L:0@:{.),pars1 L:0@:}.)"1 ','&splitstring S:0 LETA
+NB. PS   =: ((4#0 4 8)(+;)}.)"1 EPTA
+NB. MMM  =: (;:'ll ff rr bb uu dd');@:{~<:
+NB. edpe=: 3 : 0
+NB.  i=. 1 i.~ 64>j=. cube i.~"1 2 k=. (y sper inv"1 MOVS{~MOVS(mrt alr)@:i.MMM)S:0 {."1 EPTA
+NB.  (i{j){i{k
+NB. )
+
+t=: cube sper inv 'flRddbbuffddlRfrrfbbrBrrbrbLuuRuuddrrddLfflddLllrrbbrrffrrdduubbuurruurruu'
+z=: t sper 'flRddbbuffddlRf'
