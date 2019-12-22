@@ -36,7 +36,7 @@ coro=: 3 : 0
   m=. ([:,/,"1 0/&(i.6))m
  end.
  y=. y (G1 dper) m{~1 i.~ i+.j
- p=. >r{~j=. 1 i.~ (#CTMT)>i=. (>1{"1 CTMT) i. twst S:0 (<y){~&.>r=. ,(TIRE ap REF){&.>/(TIRO ap ROT)
+ p=. >r{~j=. 1 i.~ (#CTMT)>i=. (>1{"1 CTMT) i. twst S:0 (<y){~&.>r=. ,(TIRE ap REF){&.>/TIRO ap ROT
  m=. ctmi 0{::CTMT{~j{i
  y=. (ALL dper inv)&m&.(p&{) y
 )
@@ -45,9 +45,9 @@ COMT=: ".L:0'|'&splitstring"1'm'fread'./s3table' NB. corners orbit movement tabl
 comi=: (MOVS&i.L:0;:'l ll L ff r rr R bb uu dd');@:{~<: NB. corner orbits movement indices
 OPAT=: <:L:0 {."1 COMT
 MOVI=: comi L:0 {:"1 COMT
-ROTC=: 4 5 7 6 1 0 2 3,4 6 5 7 3 1 2 0,:7 4 5 6 3 0 1 2
-ROTE=: 5 4 7 6 0 1 2 3 9 10 11 8,8 9 10 11 5 6 7 4 3 2 1 0,:3 0 1 2 11 8 9 10 6 5 4 7
-ROTM=: (i.24)C.~"1 0;/MOVS i. 'ufbd','lfrb',:'urdl'
+ROTC=: C.<:&.>(1 5 2 6;8 4 7 3),(1 5 4 8;6 2 7 3),:5 4 7 2;1 8 3 6
+ROTE=: C.<:&.>(1 6 2 5;9 10 11 12;7 4 8 3),(5 7 6 8;2 10 4 11;1 9 3 12),:6 9 7 10;2 1 3 4;5 12 8 11
+ROTM=: (i.24)C.~"1 0;/MOVS i. 'ufdb','lfrb',:'urdl'
 ECMT=: 'm'fread'./s4table'
 par2=: C.&(i.8)S:1@:(<:@:".L:0)@:(';'&splitstring L:0)@:(','&splitstring)
 COAC=: {"1&par2/ 2{.ECMT NB. corner orbits and cosets
@@ -56,11 +56,11 @@ orbi=: (4#0 1)I.@:~:4<:CORN&pati NB. bad orbits
 EDOR=: 0 10 2 11 9 4 5 7 1 6 8 3{EDGE NB. method edge order
 cig3=: (4#0 1)-:4&<: NB. in g3?
 orbo=: 3 : 0
- NB. j=. 1 i.~ (#OPAT)>i=. OPAT i. (<y)orbi@:{&.>,(TIRE ap REF){&.>/(TIRO ap ROT)
- NB. y=. y (ALL dper) MOVI{::~j{i
+ j=. 1 i.~ (#OPAT)>i=. OPAT i. (<y)orbi@:{~&.>,(TIRE ap REF){&.>/(TIRO ap ROT)
+ y=. y(ALL dper)MOVI{::~j{i
  E=. EDAM{~i{~j=. ((#COAC)&>i.1:)i=. i.&1"1 |:COAC cig3@:{"1/ pati&y"2 (<CORN){~&>(<,0) ap ROTC
- NB. j=. 1 i.~ (#E)>i=. ({."1 E)i.;/10#.>:/:~@:(4{.[i.&:(/:~"1){)&y"2 (<EDOR){~&>TIRO ap ROTE
- NB. y=. y((ALL{~>(j{TIRO) ap ROTM) dper inv)1{::E{~j{i
+ k=. <10#./:~({&y >:@:i. 4&{.)(<EDOR){~&>(<,0) ap ROTE
+ y(ALL dper inv)(comi 1{::E{~({."1 E)i.k){(<i.24){~&>(<,0) ap ROTM
 )
 NB. edge permutation
 NB. LETA =: 'b'fread'./s5table'
@@ -74,4 +74,4 @@ NB.  (i{j){i{k
 NB. )
 
 t=: cube sper inv 'flRddbbuffddlRfrrfbbrBrrbrbLuuRuuddrrddLfflddLllrrbbrrffrrdduubbuurruurruu'
-z=: t sper 'flRddbbuffddlRfrrfbbrBrrbrbLuu'
+z=: t sper 'flRddbbuffddlRfrrfbbrBrrbrbLuuRuuddrrddLfflddLllrr'
