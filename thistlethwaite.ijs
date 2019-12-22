@@ -63,11 +63,12 @@ orbo=: 3 : 0
  y(ALL dper inv)(comi 1{::E{~({."1 E)i.k){(<i.24){~&>(<,0) ap ROTM
 )
 NB. edge permutation
-NB. LETA =: 'b'fread'./s5table'
-NB. pars1=: 3 : '(i.4)C.~(4|_1+10&#.inv) each boxopen ".}.}: ('')('';'';'') stringreplace y'
-NB. EPTA =: ((".L:0@:{.),pars1 L:0@:}.)"1 ','&splitstring S:0 LETA
+LETA =: 'b'fread'./s5table'
+pars1=: 3 : '(i.4)C.~(4|_1+10&#.inv) each boxopen ".}.}: ('')('';'';'') stringreplace y'
+EPTA =: ((".L:0@:{.),pars1 L:0@:}.)"1 ','&splitstring S:0 LETA
+epmi=: (;:'ll ff rr bb uu dd');@:{~<:
 NB. PS   =: ((4#0 4 8)(+;)}.)"1 EPTA
-NB. MMM  =: (;:'ll ff rr bb uu dd');@:{~<:
+NB. MMM  =: 
 NB. edpe=: 3 : 0
 NB.  i=. 1 i.~ 64>j=. cube i.~"1 2 k=. (y sper inv"1 MOVS{~MOVS(mrt alr)@:i.MMM)S:0 {."1 EPTA
 NB.  (i{j){i{k
@@ -75,3 +76,4 @@ NB. )
 
 t=: cube sper inv 'flRddbbuffddlRfrrfbbrBrrbrbLuuRuuddrrddLfflddLllrrbbrrffrrdduubbuurruurruu'
 z=: t sper 'flRddbbuffddlRfrrfbbrBrrbrbLuuRuuddrrddLfflddLllrr'
+NB. (MOVS i. epmi 1 2 1 2 1 5 1 3 2 6 2 5){&>(<0 1
