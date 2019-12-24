@@ -48,7 +48,7 @@ ap=: {/@:{L:0
 NB. movement helpers
 ALL =: (,cube{inv~])L,R,F,B,U,D,X,Y,Z,LR,UD,:FB
 dper=: 1 : '({~m({/@:{)~|.@:,) :. ({~m({/@:{)~24|12+,)' NB. permute by index
-rper=: (ALL dper) ?@:($&12) NB. random permutation
+rper=: 1 : '(m dper) ?@:($&(#m))' NB. random permutation
 sper=: ((ALL dper)MOVS&i.) :. ((ALL dper)inv MOVS&i.) NB. permute by string
 NB. indices
 EDGE=: 3 9,17 6,4 25,33 1,19 12,20 27,22 41,35 28,38 46,36 11,43 14,:44 30
