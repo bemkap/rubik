@@ -1,23 +1,37 @@
 NB. rubik's cube solver
 NB. ortega/jelinek method: http://rubikscube.info/ortega.php
 load'./rubik.ijs'
-NB. stage 1: top corners
+NB. stage 1: corner positions
 BOT=: |:5 1 6 2{CORN NB. bottom corners
 TOP=: |:0 4 3 7{CORN NB. top corners
 BTM=: 4 4$;:'b UF uuR Rur ll F UR Ruur uuL ff R bUB bb Rff rr ubUB'
 st1=: 3 : 0
  for_i. i.4 do.
-  if. 4=j=. 1 i.~ 0+./ .=TOP gface y do. break. end.
+  if. 4=j=. 1 i.~ 5+./ .=TOP gface y do. break. end.
   y=. y sper {&BTM&.< j,i
  end.
 )
-NB. stage 2: bottom corners
+NB. stage 2: corner orientation
+COM=: ;:'ruRUFuf fRFURur ruRuruuR RUrURuur rurrFrruR RFUfur rruuRuurr' NB. corner orientation movements
+COP=: |:5 7 8 26,0 7 16 26,5 18 26 34,0 16 24 32,8 16 18 26,5 7 32 34,:16 18 32 34 NB. corner orientation patterns
+orc=: 4 : 0
+ m=. (x*./ .=COP&gface)"1 z=. sper&'u'^:0 1 2 3 y
+ y=. z{~j=. 1 i.~ +./"1 m
+ y=. y sper COM{::~1 i.~ j{m
+)
+st2=: 3 : '5 orc ((<0 0) ap ROT){&><0 orc y'
+NB. stage 3: corner permutation
+CPM=: ;:'rrffrr rUfuuFuR RuRbbrUr rruffuurrurr ffUrURuffuruR rUrffRurffrr'
+CPP=: 0,1,16,17,15,31
+UDS=: 8 10,16 18,24 26,32 34,13 15,21 23,29 31,:37 39 NB. up and down line
+st3=: 3 : 0
+ i=. UDS&(2#.=/"1@:gface)"1 sper&'u'^:0 1 2 3 y
+ j=. 1 i.~ CPP e.~ i=. UDS&(2#.=/"1@:gface)"1 z=. sper&'u'^:0 1 2 3 y
+ (j{z) sper CPM{::~CPP i. j{i
+)
+NB. stage 4: 3 top edges
 
 
-NB. BCP=:13 31 40 42;13 23 40 47;13 21 42;15 23 47;13 21 23 31;37 39 40 42;21 23 37 39 NB. bottom corners patters
-NB. BCM=: ;:'ldLDFDf fLFDLdl ldLdlddL LDlDLddL ldllFlldL LFDfdl llddLddll' NB. bottom corners movements
-NB. mbp=: 1:i.~BCP&((5*./@:=face@:{)S:0) NB. match bottom pattern
-NB. stage2=: sper(BCM{::~({~(i.&1))@:(7>mbp"1)@:(sper&'d'^:0 1 2 3))
 NB. NB. stage 3: rest of the corners
 NB. MCI=: 8 10,16 18,24 26,32 34,13 15,21 23,29 31,:37 39 NB. middle corners indices
 NB. MCP=: (3 4 5 6 7;4 5 6 7;3 7;3;7)({L:0)MCI NB. middle corners patterns
