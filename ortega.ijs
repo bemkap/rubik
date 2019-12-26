@@ -28,8 +28,18 @@ st3=: 3 : 0
 )
 NB. sper&'d'^:(2~:21&gface)^:_ sper&'u'^:(2~:16&gface)^:_ 
 NB. stage 4: 3 top edges
-TEM=: ;:'beeBlEL - feFleeL reREleeL elEL '
-
+NB. TEM=: ;:'beeBlEL - feFleeL reREleeL elEL lEffeeFFL eelEL uuReruu '
+st4=: 3 : 0
+ m=. ,.i.24
+ l=. _
+ while. 1 do.
+  t=. (4+/@:{.EDGE&([i.~&:(/:~"1){))"1 z=. y (ALL dper)"1 m
+  if. +./6=t do. break. end.
+  m=. m#~l>t
+  m=. ,/m&,."0 i.24
+  l=. >./t
+ end.z{~t i. 6
+)
 NB. NB. stage 3: rest of the corners
 NB. MCI=: 8 10,16 18,24 26,32 34,13 15,21 23,29 31,:37 39 NB. middle corners indices
 NB. MCP=: (3 4 5 6 7;4 5 6 7;3 7;3;7)({L:0)MCI NB. middle corners patterns
