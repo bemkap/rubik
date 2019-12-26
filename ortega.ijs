@@ -2,24 +2,21 @@ NB. rubik's cube solver
 NB. ortega/jelinek method: http://rubikscube.info/ortega.php
 load'./rubik.ijs'
 NB. stage 1: corner positions
-BOT=: |:5 1 6 2{CORN NB. bottom corners
-TOP=: |:0 4 3 7{CORN NB. top corners
-BTM=: 4 4$;:'b UF uuR Rur ll F UR Ruur uuL ff R bUB bb Rff rr ubUB'
 st1=: 3 : 0
- for_i. i.4 do.
-  if. 4=j=. 1 i.~ 5+./ .=TOP gface y do. break. end.
-  y=. y sper {&BTM&.< j,i
- end.
+ m=. ,.i.6
+ while. 1 do.
+  if. +./i=. 47 45 42 40&(5 *./@:= gface)"1 z=. y (ALL dper)"1 m do. break. end.
+  m=. (#~_2&(~:/@:{.)"1),/m&,."0 i.6
+ end.z{~i i. 1
 )
 NB. stage 2: corner orientation
 COM=: ;:'ruRUFuf fRFURur ruRuruuR RUrURuur rurrFrruR RFUfur rruuRuurr' NB. corner orientation movements
 COP=: |:5 7 8 26,0 7 16 26,5 18 26 34,0 16 24 32,8 16 18 26,5 7 32 34,:16 18 32 34 NB. corner orientation patterns
-orc=: 4 : 0
- m=. (x*./ .=COP&gface)"1 z=. sper&'u'^:0 1 2 3 y
+st2=: 3 : 0
+ m=. (0*./ .=COP&gface)"1 z=. sper&'u'^:0 1 2 3 y
  y=. z{~j=. 1 i.~ +./"1 m
  y=. y sper COM{::~1 i.~ j{m
 )
-st2=: 3 : '5 orc ((<0 0) ap ROT){&><0 orc y'
 NB. stage 3: corner permutation
 CPM=: ;:'rrffrr rUfuuFuR RuRbbrUr rruffuurrurr ffUrURuffuruR rUrffRurffrr'
 CPP=: 0,1,16,17,15,31
@@ -29,8 +26,9 @@ st3=: 3 : 0
  j=. 1 i.~ CPP e.~ i=. UDS&(2#.=/"1@:gface)"1 z=. sper&'u'^:0 1 2 3 y
  (j{z) sper CPM{::~CPP i. j{i
 )
+NB. sper&'d'^:(2~:21&gface)^:_ sper&'u'^:(2~:16&gface)^:_ 
 NB. stage 4: 3 top edges
-
+TEM=: ;:'beeBlEL - feFleeL reREleeL elEL '
 
 NB. NB. stage 3: rest of the corners
 NB. MCI=: 8 10,16 18,24 26,32 34,13 15,21 23,29 31,:37 39 NB. middle corners indices
