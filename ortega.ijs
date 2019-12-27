@@ -19,41 +19,21 @@ st2=: 3 : 0
 )
 NB. stage 3: corner permutation
 CPM=: ;:'rrffrr rUfuuFuR RuRbbrUr rruffuurrurr ffUrURuffuruR rUrffRurffrr'
-CPP=: 0,1,16,17,15,31
+CPP=: 0 1 16 17 15 31
 UDS=: 8 10,16 18,24 26,32 34,13 15,21 23,29 31,:37 39 NB. up and down line
 st3=: 3 : 0
- i=. UDS&(2#.=/"1@:gface)"1 sper&'u'^:0 1 2 3 y
- j=. 1 i.~ CPP e.~ i=. UDS&(2#.=/"1@:gface)"1 z=. sper&'u'^:0 1 2 3 y
- (j{z) sper CPM{::~CPP i. j{i
+ i=. UDS&(2#.=/"1@:gface)"1 z=. ,/sper&'d'^:0 1 2 3"1 sper&'u'^:0 1 2 3 y
+ y=. z{~j=. 1 i.~ 6>CPP i. i 
+ y=. y sper CPM{::~j NB.CPP i. j{i
+ sper&'d'^:(1~:13&gface)^:_ sper&'u'^:(1~:8&gface)^:_ y
 )
-NB. sper&'d'^:(2~:21&gface)^:_ sper&'u'^:(2~:16&gface)^:_ 
 NB. stage 4: 3 top edges
-NB. TEM=: ;:'beeBlEL - feFleeL reREleeL elEL lEffeeFFL eelEL uuReruu '
-st4=: 3 : 0
- m=. ,.i.24
- l=. _
- while. 1 do.
-  t=. (4+/@:{.EDGE&([i.~&:(/:~"1){))"1 z=. y (ALL dper)"1 m
-  if. +./6=t do. break. end.
-  m=. m#~l>t
-  m=. ,/m&,."0 i.24
-  l=. >./t
- end.z{~t i. 6
+TEM=: ;:'UleLulEL - uleLUlEL uuleLuulEL leLEfflELff llellEfflELff LelEfflELff fflELff FelELf elEL felELF ffelELff RlELr lEL uureRuu rrlELrr BleeLb leeL bleeLB bbleeLbb '
+FLAT=: ,1 9 17 25 33 41+/0 2 5 3
+COMP=: ,FLAT ([-.~"0 1(1 i."1~ e."0 1/){])EDGE
+st4 =: 4 : 0
+ for_i. >:i.3 do.
+  c=. i i.~ y gface~ COMP {~ g=. x I.@:= FLAT gface y
+  y=. 'u' sper~ y sper TEM{::~c{g
+ end.
 )
-NB. NB. stage 3: rest of the corners
-NB. MCI=: 8 10,16 18,24 26,32 34,13 15,21 23,29 31,:37 39 NB. middle corners indices
-NB. MCP=: (3 4 5 6 7;4 5 6 7;3 7;3;7)({L:0)MCI NB. middle corners patterns
-NB. mmp=: 1:i.~MCP&(*./@:(=/"1)@:face@:{S:0) NB. match middle pattern
-NB. MCM=: ;:'rUrffRurffrr ffUrURuffuruR rruffuurrurr RuRbbrUr rUfuuFuR rrffrr' NB. middle corners movements
-NB. stage3=: 3 : 0
-NB.  M=. <./I=. mmp"1 y=. ,/sper&'u'^:0 1 2 3"1 sper&'d'^:0 1 2 3 y
-NB.  (y{~I i. M) sper M{::MCM
-NB. )
-NB. NB. stage 4: e slice
-NB. ESI=: 12 19 20 27 28 35 36 11 9 14 17 22 25 30 33 38 41 46
-NB. TEI=: 3 6 4 1
-NB. ESM=: ;:'uuRuDf ubUdL uBUdr lUdF LuDb UfUdR uFuDL uurUdB'
-NB. stage4=: 3 : 0
-NB.  y=. y sper 'u'#~1 i.~ 0<face TEI{y
-NB.  y sper ESM{::~1 i.~ 0=face ESI{y
-NB. )

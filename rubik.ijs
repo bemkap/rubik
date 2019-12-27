@@ -11,8 +11,9 @@ NB. graphical view of the cube
 COLORS =: 0 0 0,255 128 0,0 0 255,255 0 0,255 255 0,255 255 255,:0 255 0
 HUE1   =: 0 4 2 3 6 1 5{COLORS NB. standard
 HUE2   =: 0 1 6 5 2 4 3{COLORS NB. simulator
+HUE3   =: 0 6 1 4 3 5 2{COLORS NB. mine
 display=: 3 : 0
- HUE1 display y
+ HUE3 display y
  :
  c=. >:4(3 3${.,_1:,}.)"1 face 6 8$y
  c=. ,/_4,./\(12 3 3$0)1 4 5 6 7 9}~c
