@@ -5,8 +5,6 @@ face =: <.@%&8
 'u l f r b d'=: i.6
 MOVS =: 'lrfbudxyzmesLRFBUDXYZMES'
 gface=: face@:{
-pate =: 4 : '*./cube e.&(/:~"1@:(x&gface)) y'
-pati =: 4 : 'cube i.&(/:~"1@:(x&gface)) y'
 NB. graphical view of the cube
 COLORS =: 0 0 0,255 128 0,0 0 255,255 0 0,255 255 0,255 255 255,:0 255 0
 HUE1   =: 0 4 2 3 6 1 5{COLORS NB. standard
@@ -26,7 +24,7 @@ U=: cube C.inv~ 0 2 7 5;1 4 6 3;8 32 24 16;9 33 25 17;10 34 26 18
 D=: cube C.inv~ 40 42 47 45;41 44 46 43;13 21 29 37;14 22 30 38;15 23 31 39
 F=: cube C.inv~ 16 18 23 21;17 20 22 19;5 24 42 15;6 27 41 12;7 29 40 10
 B=: cube C.inv~ 32 34 39 37;33 36 38 35;2 8 45 31;1 11 46 28;0 13 47 26
-M=: cube C.inv~ 1 38 41 17;6 33 46 22
+M=: cube C.inv~ 17 41 38 1;22 46 33 6
 E=: cube C.inv~ 19 27 35 11;12 20 28 36
 S=: cube C.inv~ 3 25 44 14;4 30 43 9
 NB. rotations
