@@ -17,22 +17,42 @@ gen1=: 4 : 0
   y=. rst(,~}.)y
  end.x fwrite~''''([,],[)''';'''joinstring}.L:0 lst
 )
-T=: ".fread'T1'
-ph1=: sper inv T{::~P i. orie
+T1=: ".fread'T1'
+ph1=: sper inv T1{::~P i. orie
 NB. phase 2: corner orientation
-twst=: CORN&(1 3 <./@i.~"1 gface)
 G1=: (U{U),(D{D),L,R,F,:B
+twst=: CORN&(1 3 <./@i.~"1 gface)
 pate=: 2 : 'x*./@:(e.~&:(/:~"1))y&{'
 pati=: 2 : 'x(i. &:(/:~"1))y&{'
-aply=: [:,/{"1/
+appl=: [:,/{"1/
 ph2a=: 3 : 0
- for_p. >:i.4 do.
-  z=. G1 appl^:p ,:y
-  if. (6^p)>i=. i.&1 (LRSL pate UDSL)"1 z do. y (G1 dper) |.(p#6)#:i return. end.
- end.
- for_p. >:i.4 do.
-  z=. G1 appl ,:y
-  if. (6^p)>i=. i.&1 ((4{.EDGE) pate UDSL)"1 z do. y (G1 dper) |.(p#6)#:i return. end.
- end.
+ z=. ~.(cube,G1) appl^:5 ,:y
+ z{~i.&1 ((LRSL pate UDSL)"1,((4{.EDGE) pate UDSL)"1)z
 )
-move2=: 3|((8#3)#:0 0 1650 1550 0 0)+28368 712 3770 36541 15981 722&A.
+T2=: ".S:0 'b'fread'T2'
+M2=: ;:'l ll L f ff F r rr R b bb B uu dd'
+SYM2=: cube,>,/(RI ap ROT){&.>/TI ap REF
+ph2b=: 3 : 0
+ j=. i.&1 (#T2)>i=. (1 {::"1 T2) i. twst"1 S=. SYM2{y
+ (j{SYM2){inv(j{S)sper inv;M2{~0{::T2{~j{i
+)
+ph2=: ph2b@:ph2a
+NB. phase 3: corner orbit
+oooc=: (4#0 1)~:4<:CORN([i.{)]
+SYM3=: >TIRO ap ROT
+T3a=: ".S:0 'b'fread'T3a'
+M3=: a:,;:'l ll L ff r rr R bb uu dd'
+ph3a=: 3 : 0
+ j=. i.&1 (#T3a)>i=. (>{."1 T3a) i. oooc"1 S=. SYM3{y
+ (j{SYM3){inv(j{S)sper;M3{~1{::T3a{~j{i
+)
+ALPH=: (i.8)C.~a:,<:L:0(1 4;6 8),(2 4;5 8),(<1 2),(<1 4),:(<2 4)
+BETA=: (i.8)C.~a:,<:L:0(1 8;2 7),:(<1 5),a:
+T3b=: {"1/>(i.8)C.~L:1 <:L:0 ".S:0]2{.F=. 'b'fread'T3b'
+T3c=: _70]\".S:0]2}.F
+ph3b=: 3 : 0
+ j=. i.&1 +./"1 i=. ((4#0 1)-:4&<:)"1(T3b{CORN&([i.{))"1 S=. SYM3{y
+ D=. T3c{~i.&1 j{i
+ >:/:~FBSL i.~ EDGE{j{S
+ NB. k=. ({."1 D) i. <>:10#./:~FBSL i.~ EDGE{j{S
+)
