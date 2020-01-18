@@ -1,4 +1,5 @@
 load'~temp/rubik/rubik.ijs stats'
+Ex=: cube sper inv 'flRddbbuffddlRfrrfbbrBrrbrbLuuRuuddrrddLfflddLllrrbbrrffrrdduubbuurruurruu'
 NB. phase 1: edge orientation
 G0=: U,D,L,R,F,:B
 stor=: f,b,u,d,l,r
@@ -31,7 +32,7 @@ ph2a=: 3 : 0
 )
 T2=: ".S:0 'b'fread'T2'
 M2=: ;:'l ll L f ff F r rr R b bb B uu dd'
-SYM2=: cube,>,/(RI ap ROT){&.>/TI ap REF
+SYM2=: >,/(RI ap ROT){&.>/TI ap REF
 ph2b=: 3 : 0
  j=. i.&1 (#T2)>i=. (1 {::"1 T2) i. twst"1 S=. SYM2{y
  (j{SYM2){inv(j{S)sper inv;M2{~0{::T2{~j{i
@@ -46,8 +47,6 @@ ph3a=: 3 : 0
  j=. i.&1 (#T3a)>i=. (>{."1 T3a) i. oooc"1 S=. SYM3{y
  (j{SYM3){inv(j{S)sper;M3{~1{::T3a{~j{i
 )
-ALPH=: (i.8)C.~a:,<:L:0(1 4;6 8),(2 4;5 8),(<1 2),(<1 4),:(<2 4)
-BETA=: (i.8)C.~a:,<:L:0(1 8;2 7),:(<1 5),a:
 T3b=: {"1/>(i.8)C.~L:1 <:L:0 ".S:0]2{.F=. 'b'fread'T3b'
 T3c=: _70]\".S:0]2}.F
 ph3b=: 3 : 0
@@ -56,3 +55,6 @@ ph3b=: 3 : 0
  >:/:~FBSL i.~ EDGE{j{S
  NB. k=. ({."1 D) i. <>:10#./:~FBSL i.~ EDGE{j{S
 )
+
+
+test=: ((12#1)-:orie),((8#0)-:twst),(LRSL pate LRSL),((8#0)-:oooc)
