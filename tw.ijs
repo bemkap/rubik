@@ -24,7 +24,6 @@ NB. phase 2: corner orientation
 G1=: (U{U),(D{D),L,R,F,:B
 twst=: CORN&(1 3 <./@i.~"1 gface)
 pate=: 2 : 'x*./@:(e.~&:(/:~"1))y&{'
-pati=: 2 : 'x(i. &:(/:~"1))y&{'
 appl=: [:,/{"1/
 ph2a=: 3 : 0
  z=. ~.(cube,G1) appl^:5 ,:y
@@ -41,6 +40,7 @@ ph2=: ph2b@:ph2a
 NB. phase 3: corner orbit
 oooc=: (4#0 1)~:4<:CORN([i.{)]
 SYM3=: >TIRO ap ROT
+EDGE1=: 0 10 2 11 9 4 5 7 1 6 8 3{EDGE NB. method edge coordinates
 T3a=: ".S:0 'b'fread'T3a'
 M3=: a:,;:'l ll L ff r rr R bb uu dd'
 ph3a=: 3 : 0

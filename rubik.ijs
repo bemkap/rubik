@@ -3,7 +3,7 @@ require'viewmat'
 cube =: i.48
 face =: <.@%&8
 'u l f r b d'=: i.6
-MOVS =: 'lrfbudxyzmesLRFBUDXYZMES'
+MOVS =: 'ilrfbudxyzmesILRFBUDXYZMES'
 gface=: face@:{
 NB. graphical view of the cube
 COLORS =: 0 0 0,255 128 0,0 0 255,255 0 0,255 255 0,255 255 255,:0 255 0
@@ -18,6 +18,7 @@ display=: 3 : 0
  x viewmat c
 )
 NB. movements permutations
+I=: cube
 R=: cube C.inv~ 24 26 31 29;25 28 30 27;2 37 42 18;4 35 44 20;7 32 47 23
 L=: cube C.inv~ 8 10 15 13;9 12 14 11;0 16 40 39;3 19 43 36;5 21 45 34
 U=: cube C.inv~ 0 2 7 5;1 4 6 3;8 32 24 16;9 33 25 17;10 34 26 18
@@ -48,7 +49,7 @@ TIRE=: a:,<,0 NB. twist invariant reflection
 NB.
 ap=: {/@:{L:0
 NB. movement helpers
-ALL =: (,cube{inv~])L,R,F,B,U,D,X,Y,Z,M,E,:S NB.LR,UD,:FB
+ALL =: (,cube{inv~])I,L,R,F,B,U,D,X,Y,Z,M,E,:S NB.LR,UD,:FB
 dper=: 1 : '({~m({/@:{)~|.@:,) :. ({~m({/@:{)~24|12+,)' NB. permute by index
 rper=: 1 : '(m dper) ?@:($&(#m))' NB. random permutation
 sper=: ((ALL dper)MOVS&i.) :. ((ALL dper)inv MOVS&i.) NB. permute by string
