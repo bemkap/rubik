@@ -50,7 +50,7 @@ NB.
 ap=: {/@:{L:0
 NB. movement helpers
 ALL =: (,cube{inv~])I,L,R,F,B,U,D,X,Y,Z,M,E,:S NB.LR,UD,:FB
-dper=: 1 : '({~m({/@:{)~|.@:,) :. ({~m({/@:{)~24|12+,)' NB. permute by index
+dper=: 1 : '({~m({/@:{)~|.@:,) :. ({~m({/@:{)~26|13+,)' NB. permute by index
 rper=: 1 : '(m dper) ?@:($&(#m))' NB. random permutation
 sper=: ((ALL dper)MOVS&i.) :. ((ALL dper)inv MOVS&i.) NB. permute by string
 NB. indices
