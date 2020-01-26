@@ -14,13 +14,12 @@ NB. 1f-1b. ul or ur on db
 dbulur=: (8 e."1 (ulur i.~&:(/:~"1) EDGE&{))"1
 NB. (#~ [:(uf1*.db1*.dbulur)"1 I&sper inv"1) 'mMuU'{~?10000 30$4
 
-eolrcat=: 'eolr40';'eolr11u';'eolr11df';'eolr11db'
-ALGS=: >,&.>/(_30<\'~temp/rubik/'&(fread@:,))L:0 ]1{eolrcat
-
-AFTER=: K=: 0$BEFORE=: ({~?~@:#)ALGS
+cat=: 'cmll';'eolr40';'eolr11u';'eolr11df';'eolr11db'
+BEFORE=: ({~?~@:#)ALGS=: >,&.>/('b'fread'~temp/rubik/'&,)L:0]3{cat
+AFTER=: K=: ''
 HUE=: 0 255 0,255 128 0,255 255 0,255 0 0,255 255 255,:0 0 255
 P0=: +.r.1r8p1+1r4p1*i.8
-P1=: ((%:2)*>./Q)*"1+.r.1r4p1+2r4p1*i.4
+P1=: ((%:2)*>./P0)*"1+.r.1r4p1+2r4p1*i.4
 FC0=: ;/<.115+180*,"2]2(,&0)\(,{.)P0
 FC1=: ;/<.115+100*,"2]2(,&0)\P2=: (,{.)25426873 A. P0,P1
 FC2=: ;/<.115+ 80*,"2]2(,&0)\P2
@@ -43,17 +42,17 @@ win_grph_paint=: 3 : 0
  catch. return. end.
 )
 win_grph_char=: 3 : 0
- if.     239 160 131-:a.i.sysdata do. K=: 0$AFTER=: }:AFTER
- elseif. 239 160 133-:a.i.sysdata do. AFTER=: K=: 0$BEFORE=: 1|.BEFORE
+ if.     239 160 131-:a.i.sysdata do. K=: ''[AFTER=: }:AFTER
+ elseif. 239 160 133-:a.i.sysdata do. AFTER=: K=: ''[BEFORE=: 1|.BEFORE
  elseif. 1 do.
   K=: _2{.K,sysdata
   Ix=. K i.~ _2]\'97137139842482647931179386262846'
   if. Ix<16 do. K=: 0$AFTER=: AFTER,Ix{'udlrbfmeUDLRBFME' end.
  end.
- wd'set movs text ',AFTER
+ wd'set movs text ',60{.,_30(,&LF)\AFTER
  glpaint''
 )
 wd'pc win closeok;pn "lubikio";'
 wd'minwh 240 240;cc grph isigraph;'
-wd'minwh 240  30;cc movs static;cn ""'
+wd'minwh 240  30;cc movs static sunken;cn ""'
 wd'pshow;'
