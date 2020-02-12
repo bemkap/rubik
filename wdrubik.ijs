@@ -1,6 +1,7 @@
-load'~temp/rubik/rubik.ijs gl2'
+load'~temp/rubik/rubik.ijs ~temp/rubik/controls.ijs gl2'
 coinsert'jgl2'
 BEFORE=: <AFTER=: K=: ''
+CONTROLS=: |.&.> kb_u;kb_U;kb_d;kb_D;kb_r;kb_R;kb_l;kb_L;kb_f;kb_F;kb_b;kb_B;kb_m;kb_M
 HUE=: 0 255 0,255 128 0,255 255 0,255 0 0,255 255 255,:0 0 255
 P0=: +.r.1r8p1+1r4p1*i.8
 P1=: ((%:2)*>./P0)*"1+.r.1r4p1+2r4p1*i.4
@@ -30,18 +31,15 @@ win_grph_paint=: 3 : 0
  catch. return. end.
 )
 win_grph_char=: 3 : 0
- if.     239 160 131-:a.i.sysdata do. K=: ''[AFTER=: }:AFTER
- elseif. 239 160 133-:a.i.sysdata do. AFTER=: K=: ''[BEFORE=: 1|.BEFORE
+ if.     kb_undo-:sysdata do. K=: ''[AFTER=: }:AFTER
+ elseif. kb_next-:sysdata do. AFTER=: K=: ''[BEFORE=: 1|.BEFORE
  elseif. 1 do.
-  K=: _2{.K,sysdata
-  Ix=. K i.~ _2]\'97137139842482647931179386262846'
-  if. Ix<16 do. K=: 0$AFTER=: AFTER,Ix{'udlrbfmeUDLRBFME' end.
+  Ix=. 1 i.~ CONTROLS {.@:E.&> <K=: sysdata,K
+  if. Ix<#CONTROLS do. K=: ''[AFTER=: AFTER,Ix{'uUdDrRlLfFbBmM' end.
  end.
  wd'set movs text ',60{.,_30(,&LF)\AFTER
  glpaint''
 )
-cat=: 'cmll';'eolr40';'eolr11u';'eolr11df';'eolr11db'
-win_gen_button=: 3 : 0
- glpaint BEFORE=: ({~?~@:#)>,&.>/('b'fread'~temp/rubik/'&,)L:0 cat#~'1'=cmll,eolr40,eolr11u,eolr11df,eolr11db
-)
+fs=: '~temp/rubik/'&,&.>'cmll';'eolr40';'eolr11u';'eolr11df';'eolr11db'
+win_gen_button=: 3 : 'glpaint BEFORE=: ({~?~@:#)>,&.>/''b''&fread&.>fs#~''1''=cmll,eolr40,eolr11u,eolr11df,eolr11db'
 wd WIN,';pshow'

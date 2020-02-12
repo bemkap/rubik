@@ -1,0 +1,24 @@
+k_backspace=. 239 160 131{a.
+k_left=. 239 160 146{a.
+k_up=. 239 160 147{a.
+k_right=. 239 160 148{a.
+k_down=. 239 160 149{a.
+k_enter=. 239 160 132{a.
+k_intro=. 239 160 133{a.
+
+kb_u=: '97'
+kb_U=: '79'
+kb_d=: '13'
+kb_D=: '31'
+kb_r=: '39'
+kb_R=: '93'
+kb_l=: '71'
+kb_L=: '17'
+kb_f=: '24'
+kb_F=: '26'
+kb_b=: '84'
+kb_B=: '86'
+kb_m=: '82'
+kb_M=: '28'
+kb_next=: k_intro
+kb_undo=: k_backspace
