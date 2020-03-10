@@ -55,6 +55,10 @@ ph3b=: 3 : 0
  >:/:~FBSL i.~ EDGE{j{S
  NB. k=. ({."1 D) i. <>:10#./:~FBSL i.~ EDGE{j{S
 )
+ph3b=: 3 : 0
+ 'r e'=. 8 13#:i.&1 ((4#0 1)*./@:=4&<:)"1,/([(T3b{i.){)&y"2 CORN{~>TIRO ap ROTC
+ 
+)
 
 
 test=: ((12#1)-:orie),((8#0)-:twst),(LRSL pate LRSL),((8#0)-:oooc)
