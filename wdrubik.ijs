@@ -1,6 +1,6 @@
 load'~temp/rubik/rubik.ijs ~temp/rubik/controls.ijs gl2'
 coinsert'jgl2'
-BEFORE=: <AFTER=: K=: ''
+BEFORE=: <SOLUTION=: AFTER=: K=: ''
 CONTROLS=: |.&.> kb_u;kb_U;kb_d;kb_D;kb_r;kb_R;kb_l;kb_L;kb_f;kb_F;kb_b;kb_B;kb_m;kb_M
 HUE=: 0 255 0,255 128 0,255 255 0,255 0 0,255 255 255,:0 0 255
 P0=: +.r.1r8p1+1r4p1*i.8
@@ -31,14 +31,18 @@ win_grph_paint=: 3 : 0
   glrect 1 1 230 230
  catch. return. end.
 )
+mmmm=: _4&}.^:(1=_4&(+/@:~:@:{.))
+mM=: _2&}.^:(_2(=(12|6&+))/@:({.!._)'udlrfbUDLRFB'&i.)
+reduce=: mmmm@:mM
 win_grph_char=: 3 : 0
  if.     kb_undo-:sysdata do. K=: ''[AFTER=: }:AFTER
- elseif. kb_next-:sysdata do. AFTER=: K=: ''[BEFORE=: 1|.BEFORE
+ elseif. kb_next-:sysdata do. SOLUTION=: AFTER=: K=: ''[BEFORE=: 1|.BEFORE
+ elseif. kb_solution-:sysdata do. SOLUTION=: ')',~'(',>{.BEFORE
  elseif. 1 do.
   Ix=. 1 i.~ CONTROLS {.@:E.&> <K=: sysdata,K
-  if. Ix<#CONTROLS do. K=: ''[AFTER=: AFTER,Ix{'uUdDrRlLfFbBmM' end.
+  if. Ix<#CONTROLS do. K=: ''[AFTER=: reduce AFTER,Ix{'uUdDrRlLfFbBmM' end.
  end.
- wd'set movs text ',60{.,_30(,&LF)\AFTER
+ wd'set movs text ',60{.,_30(,&LF)\AFTER,SOLUTION
  glpaint''
 )
 fs=: '~temp/rubik/'&,&.>'cmll';'eolr40';'eolr11u';'eolr11df';'eolr11db'

@@ -22,3 +22,4 @@ kb_m=: '82'
 kb_M=: '28'
 kb_next=: k_intro
 kb_undo=: k_backspace
+kb_solution=: ,'+'
