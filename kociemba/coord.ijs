@@ -3,21 +3,13 @@ load'cubie.ijs'
 ccubcor=: ((!i. 8)+/@:*(}:+/@:>{:)\@:{.),3#.}:@:{:
 ecubcor=: ((!i.12)+/@:*(}:+/@:>{:)\@:{.),2#.}:@:{:
 
-ccorcubp=: 3 : '}:|.>r&.>/(;/!i. 8),<{.y'
-ccorcubo=: (,(3|3-+/))@:{:
-
-ecorcubp=: 3 : '}:|.>r&.>/(;/!i.12),<{.y'
-ecorcubo=: (,(2|2-+/))@:{:
-
-ccorcub=: ccorcubp,:ccorcubo
-ecorcub=: ecorcubp,:ecorcubo
-
-f=: 3 : 0
- i=. i.8
- for_j. |.y do.
- 
-
 r=: 4 : 0
  a=. x<.@%~{.y
  ((}.y),a),~({.y)-a*x
 )
+
+corcubp=. 4 : '|.(i.x)C.~(;/_1-a)+&.>-@:i.&.>;/(i.x)>:@-a=. }:|.>r&.>/;/(!i.x),y'
+corcubo=. 4 : '(,(x|x-+/))x #.inv y'
+
+ccorcub=: (8 corcubp 0&{),(3 corcubo 1&{)
+ecorcub=: (12 corcubp 0&{),(2 corcubo 1&{),:(2 corcubo 2&{)

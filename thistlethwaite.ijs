@@ -50,7 +50,7 @@ T3b=: {"1/>(i.8)C.~L:1 <:L:0 ".&>2{.F=. 'b'fread'T3b' NB. cosets table
 T3c=: _70]\".&>2}.F NB. FBSL position table
 T3d=: ".&>'b'fread'T3d' NB. corners of G3 table
 ph3b=: 3 : 0
- c=. >,a C.&.>/ b C.&.> <i.8
+ c=. >,a C.&.>/b C.&.><i.8
  'r d'=. 8 18#:i.&1 e.&T3d ,/c{"_ 1(>TIRO ap ROTC){CORN([i.{)y
 
  NB. 'r d'=. 8 13#:i.&1 e.&T3d,/T3b{"_ 1(>TIRO ap ROTC){CORN([i.{)y
