@@ -1,6 +1,4 @@
-Axis=: 'urfdlb'
-CORNER=: 'URF';'UFL';'ULB';'UBR';'DFR';'DLF';'DBL';'DRB'
-EDGE=: 'UR';'UF';'UL';'UB';'DR';'DF';'DL';'DB';'FR';'FL';'BL';'BR'
+load'defs.ijs'
 
 CPc=: |:"2]_2((CORNER i. {.),((".&>)@:{:))\"1;:&>cutLF(0 : 0)
  UBR 0 URF 0 UFL 0 ULB 0 DFR 0 DLF 0 DBL 0 DRB 0

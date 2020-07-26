@@ -1,5 +1,4 @@
-Axis=: 'urfdlb'
-FACELET=: _2<\,,./Axis&,."0 a.{~49+i.9
+load'defs.ijs'
 
 Pf=: F i. ;:&>cutLF(0 : 0)
  u3 u6 u9 u2 u5 u8 u1 u4 u7 f1 f2 f3 r4 r5 r6 r7 r8 r9 l1 l2 l3 f4 f5 f6 f7 f8 f9 d1 d2 d3 d4 d5 d6 d7 d8 d9 b1 b2 b3 l4 l5 l6 l7 l8 l9 r1 r2 r3 b4 b5 b6 b7 b8 b9

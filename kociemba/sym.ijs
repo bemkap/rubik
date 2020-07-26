@@ -1,0 +1,16 @@
+load'defs.ijs'
+
+CSP=: |:"2]_2((CORNER i. {.),((".&>)@:{:))\"1;:&>cutLF(0 : 0)
+ URF 1 DFR 2 DLF 1 UFL 2 UBR 2 DRB 1 DBL 2 ULB 1 
+ DLF 0 DFR 0 DRB 0 DBL 0 UFL 0 URF 0 UBR 0 ULB 0 
+ UBR 0 URF 0 UFL 0 ULB 0 DRB 0 DFR 0 DLF 0 DBL 0 
+ UFL 3 URF 3 UBR 3 ULB 3 DLF 3 DFR 3 DRB 3 DBL 3
+)
+
+ESP=: |:"2]_2((EDGE i. {.),((".&>)@:{:))\"1;:&>cutLF(0 : 0)
+ UF 1 0 FR 0 0 DF 1 0 FL 0 0 UB 1 0 BR 0 0 DB 1 0 BL 0 0 UR 1 0 DR 1 0 DL 1 0 UL 1 0
+ DL 0 0 DF 0 0 DR 0 0 DB 0 0 UL 0 0 UF 0 0 UR 0 0 UB 0 0 FL 0 0 FR 0 0 BR 0 0 BL 0 0
+ UB 0 1 UR 0 1 UF 0 1 UL 0 1 DB 0 1 DR 0 1 DF 0 1 DL 0 1 BR 1 1 FR 1 1 FL 1 1 BL 1 1
+ UL 0 0 UF 0 0 UR 0 0 UB 0 0 DL 0 0 DF 0 0 DR 0 0 DB 0 0 FL 0 0 FR 0 0 BR 0 0 BL 0 0
+)
+

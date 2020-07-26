@@ -1,15 +1,10 @@
-load'cubie.ijs'
+ccoord=: ((!i. 8)+/@:*(}:+/@:>{:)\@:{.),3#.}:  @:{:
+ecoord=: ((!i.12)+/@:*(}:+/@:>{:)\@:{.),2#.}:"1@:}.
 
-ccubcor=: ((!i. 8)+/@:*(}:+/@:>{:)\@:{.),3#.}:@:{:
-ecubcor=: ((!i.12)+/@:*(}:+/@:>{:)\@:{.),2#.}:@:{:
+r=: 4 : 'a,~(}.y),~({.y)-x*a=. x<.@%~{.y'
 
-r=: 4 : 0
- a=. x<.@%~{.y
- ((}.y),a),~({.y)-a*x
-)
+ccubiep=: 4 : '|.(i.x)C.~(;/_1-a)+&.>-@:i.&.>;/(i.x)>:@-a=. }:|.>r&.>/;/(!i.x),y'
+ccubieo=: 4 : '(,(x|x-+/))x #.inv y'
 
-corcubp=. 4 : '|.(i.x)C.~(;/_1-a)+&.>-@:i.&.>;/(i.x)>:@-a=. }:|.>r&.>/;/(!i.x),y'
-corcubo=. 4 : '(,(x|x-+/))x #.inv y'
-
-ccorcub=: (8 corcubp 0&{),(3 corcubo 1&{)
-ecorcub=: (12 corcubp 0&{),(2 corcubo 1&{),:(2 corcubo 2&{)
+ccubie=: _8{.&>(8 ccubiep 0&{);(3 ccubieo 1&{)
+ecubie=: _12{.&>(12 ccubiep 0&{);(2 ccubieo 1&{);(2 ccubieo 2&{)
