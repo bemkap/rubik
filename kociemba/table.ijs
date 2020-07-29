@@ -9,24 +9,21 @@ eoat=: 2#.EPc({.@:]{(+2&{))"1 2/~(,(2|2-+/))"1@:(2#.inv])i.2^11
 NB. corner permutation table
 NB. cpt=: A."1({."2 CPc){"2 1/(i.8)A.~i.!8
 NB. flip udslice to raw flip udslice
+SHL=: 33 b.
 rfu=: (3 : 0)''
- RFU=. oc=. 126720$0
- cidx=. 0
+ oc=. 126720$0
+ RFU=. 64430$0
+ cidx=. _1
  for_i. i.495 do.
-  c=. udc1^:_1 i
+  c=. udc1 inv i
   for_j. i.256 do.
    bo=. 256#.i,j
-   for_k. i.8 do.
-    if. 0=(bo{oc)(17 b.)2^k do.
-     c=. eoc^:_1 k+j^3
-     RFU=. RFU(cidx})k+bo^3
-     cidx=. >:cidx
-     for_sym. i.16 do.
-      p=. ((ESYM{~sym{ISYM) ecp c) ecp sym{ISYM
-      n=. +/2048 1*(udc1,eoc)p
-     end.
-    end.
+   for_k. (#~0=(bo{oc) AND SHL&1)i.8 do.
+    p=. c,:eoc inv k+3 SHL j
+    RFU=. RFU(cidx=. >:cidx)}~k+3 SHL bo
+    n=. (2048#.udc1@:{.,eoc@:{:)"2(([ ecp"2 p ecp"2 ])&({&ESYM){&ISYM)i.16
+    oc=. ((_3 SHL n) OR (n AND 7) SHL 1)(_3 SHL n)}oc
    end.
   end.
- end.      
+ end.
 )

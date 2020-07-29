@@ -4,7 +4,7 @@ cpc=: (!i.8)+/@:*(}:+/@:>{:)\ NB. corner permutation coordinate
 coc=: 3#.}: NB. corner orientation coordinate
 
 epc=: (!i.12)+/@:*(}:+/@:>{:)\ NB. edge permutation coordinate
-eoc=: (2#.}:) :. ((,(2|2-+/))@:(2#.inv])) NB. edge orientation coordinate
+eoc=: (2#.}:) :. ((,(2|2-+/))@:((11#2)&#:)) NB. edge orientation coordinate
 
 B=: <"1(i.4)nCr/i.12
 udc1j=: [:+/@;B{~&.>(i.13)}.@:(<;._2)~(8&<:,1:) NB. udslice coordinate phase 1
@@ -15,7 +15,7 @@ udc1i=: 3 : 0
   if. y<{:{:b do. r=. r,1:b=. }:b
   else. r=. r,0:y=. y-{:{:b end.
   b=. }:"1 b
- end.(i.12)C.~(8+i._4)<"1@:,.~12->:I.r
+ end.(i.12)C.~(#~~:/&>)(8+i._4)<"1@:,.~12->:I.r
 )
 udc1=: udc1j :. udc1i
 
