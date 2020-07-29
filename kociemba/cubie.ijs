@@ -17,12 +17,7 @@ EPc=: |:"2]_2((EDGE i. {.),((".&>)@:{:))\"1;:&>cutLF(0 : 0)
  UR 0 0 UF 0 0 UL 0 0 BR 1 1 DR 0 0 DF 0 0 DL 0 0 BL 1 1 FR 0 0 FL 0 0 UB 1 1 DB 1 1
 )
 
-CMc=: 4 : 0
- 'c o'=. CPc{~Axis i.x
- c{"1({.,:o(3|+){:)y
-)
-
-EMc=: 4 : 0
- 'e o oa'=. EPc{~Axis i.x
- e{"1({.,(o,:oa)(2|+)}.)y
-)
+NB. corner coordinate product
+ccp=: {.@:[{"1{.@:],:(3|+)&{:
+NB. edge coordinate product
+ecp=: {.@:[{"1{.@:],:(2|+)&{:
