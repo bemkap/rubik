@@ -18,11 +18,16 @@ udc1i=: 3 : 0
  end.(i.12)C.~(#~~:/&>)(8+i._4)<"1@:,.~12->:I.r
 )
 udc1=: udc1j :. udc1i
+fudc1=: 4 : 0
+ c=. udc1 inv udc1 y
+ c=. c,:eoc inv eoc y
+ for_k. i.16 do.
+  d=. (k{ESYM) ecp c ecp ESYM{~k{ISYM
+  n=. 2048#.(udc1{.d),eoc{:d
+ end.
 
+ NB. c=. (udc1 inv@:udc1@:{.,:{:)y
+ NB. i=. (_1&~:i.1:)d=. x{~(2048#.udc1@:{.,eoc@:{:)"2 c&apesym"0 i.16
+ NB. i(+4&SHL)i{d
+)
 udc2=: 0:
-
-NB. r=: 4 : 'a,~(}.y),~({.y)-x*a=. x<.@%~{.y'
-NB. ccubiep=: 4 : '|.(i.x)C.~(;/_1-a)+&.>-@:i.&.>;/(i.x)>:@-a=. }:|.>r&.>/;/(!i.x),y'
-NB. ccubieo=: 4 : '(,(x|x-+/))x #.inv y'
-NB. ccubie=: _8{.&>(8 ccubiep 0&{);(3 ccubieo 1&{)
-NB. ecubie=: _12{.&>(12 ccubiep 0&{);(2 ccubieo 1&{);(2 ccubieo 2&{)

@@ -8,10 +8,10 @@ CSP=: |:"2]_2((CORNER i. {.),((".&>)@:{:))\"1;:&>cutLF(0 : 0)
 )
 
 ESP=: |:"2]_2((EDGE i. {.),((".&>)@:{:))\"1;:&>cutLF(0 : 0)
- UF 1 0 FR 0 0 DF 1 0 FL 0 0 UB 1 0 BR 0 0 DB 1 0 BL 0 0 UR 1 0 DR 1 0 DL 1 0 UL 1 0
- DL 0 0 DF 0 0 DR 0 0 DB 0 0 UL 0 0 UF 0 0 UR 0 0 UB 0 0 FL 0 0 FR 0 0 BR 0 0 BL 0 0
- UB 0 1 UR 0 1 UF 0 1 UL 0 1 DB 0 1 DR 0 1 DF 0 1 DL 0 1 BR 1 1 FR 1 1 FL 1 1 BL 1 1
- UL 0 0 UF 0 0 UR 0 0 UB 0 0 DL 0 0 DF 0 0 DR 0 0 DB 0 0 FL 0 0 FR 0 0 BR 0 0 BL 0 0
+ UF 1 FR 0 DF 1 FL 0 UB 1 BR 0 DB 1 BL 0 UR 1 DR 1 DL 1 UL 1
+ DL 0 DF 0 DR 0 DB 0 UL 0 UF 0 UR 0 UB 0 FL 0 FR 0 BR 0 BL 0
+ UB 0 UR 0 UF 0 UL 0 DB 0 DR 0 DF 0 DL 0 BR 1 FR 1 FL 1 BL 1
+ UL 0 UF 0 UR 0 UB 0 DL 0 DF 0 DR 0 DB 0 FL 0 FR 0 BR 0 BL 0
 )
 
 NB. corner symmetries and inverses
@@ -20,3 +20,7 @@ NB. edge symmetries
 ESYM=: Ie,ecp/&>}.(#&ESP)&.>,{<@:i."0]3 2 4 2
 NB. inverse index
 ISYM=: i.&1"1 (0 1 2-:3{.{.@:ccp)"2/~CSYM
+NB. apply corner symmetry
+apcsym=: ({:@:] ccp [ ccp {.@:])(,:&({&CSYM){&ISYM)
+NB. apply edge symmetry
+apesym=: ({:@:] ecp [ ecp {.@:])(,:&({&ESYM){&ISYM)
