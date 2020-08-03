@@ -1,16 +1,21 @@
-load'stats'
-
-NB. corner permutation coordinate
+NB. corner permutation coord
 cpc=: (!i.8)+/@:*(}:+/@:>{:)\
-NB. corner orientation coordinate
+cpci=: 3 : 0
+ s=. 0$r=. i.8
+ for_i. }:|.([:>[:(((|,<.@:%~){.),}.@:])&.>/(!i.8);/@:,])y do.
+  s=. s,r((1:i:~(<:7&-)){[)i
+  r=. r-.s
+ end.|.s
+)
+NB. corner orientation coord
 coc=: 3#.}:
-NB. edge permutation coordinate
+NB. edge permutation coord
 epc=: (!i.12)+/@:*(}:+/@:>{:)\
-NB. edge orientation coordinate
+NB. edge orientation coord
 eoc=: (2#.}:) :. ((,(2|2-+/))@:((11#2)&#:))
 NB. flip udslice to raw flip udslice array
 RFU=: _4(256#.|.)\a.i.fread'RawFlipSlice'
-NB. udslice coordinate(phase 1)
+NB. udslice coord(phase 1)
 B=: <"1(i.4)nCr/i.12
 udc1j=: [:+/@;B{~&.>(i.13)}.@:(<;._2)~(8&<:,1:)
 udc1i=: 3 : 0
@@ -40,11 +45,10 @@ fudc1=: 4 : 0
   if. e~:_1 do. k+4 SHL e return. end.
  end.
 )
-NB. udslice sotred coordinate(phase 2)
-udc2j=: 3 : '24#.(udc1 y),*`+/(#~1 2 3)(,@:,.);<@:(+/\.)@:({:<}:)\8-~(#~8&<:)y'
-udc2i=: 3 : 0
- x=. 24|y
- 
+NB. udslice sotred coord(phase 2)
+P=: 0 6 2 12 8 14 1 7 4 18 10 20 3 13 5 19 16 22 9 15 11 21 17 23
+udc2j=: 24#.udc1,P{~A.@:((#~8&<:)-8:)
+udc2i=: (8 9 10 11 A.~ P i. 24&|)[`(8 9 10 11 i.~])`]}udc1 inv@:(24<.@%~])
 udc2=: udc2j :. udc2i
 
 NB. rfu=: (3 : 0)''
