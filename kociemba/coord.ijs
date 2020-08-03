@@ -1,18 +1,17 @@
+load'defs.ijs'
 NB. corner permutation coord
-cpc=: (!i.8)+/@:*(}:+/@:>{:)\
+cpcj=: (!i.8)+/@:*(}:+/@:>{:)\
 cpci=: 3 : 0
- s=. 0$r=. i.8
- for_i. }:|.([:>[:(((|,<.@:%~){.),}.@:])&.>/(!i.8);/@:,])y do.
-  s=. s,r((1:i:~(<:7&-)){[)i
-  r=. r-.s
- end.|.s
+ a=. }.>(((|,<.@:%~){.),}.@:])&.>/(!i.8);/@:,y
+ |.(i.8)C.~((_1-a)([-i.@>:@-)&.>&(;/)(->:i.8))
 )
-NB. corner orientation coord
-coc=: 3#.}:
+cpc=: cpcj :. cpci
+NB. corner twist coord
+coc=: (3#.}:) :. ((,3|3-+/)@:((7#3)&#:))
 NB. edge permutation coord
 epc=: (!i.12)+/@:*(}:+/@:>{:)\
-NB. edge orientation coord
-eoc=: (2#.}:) :. ((,(2|2-+/))@:((11#2)&#:))
+NB. edge flip coord
+eoc=: (2#.}:) :. ((,2|2-+/)@:((11#2)&#:))
 NB. flip udslice to raw flip udslice array
 RFU=: _4(256#.|.)\a.i.fread'RawFlipSlice'
 NB. udslice coord(phase 1)
