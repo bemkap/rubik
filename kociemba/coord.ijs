@@ -9,7 +9,12 @@ cpc=: cpcj :. cpci
 NB. corner twist coord
 coc=: (3#.}:) :. ((,3|3-+/)@:((7#3)&#:))
 NB. edge permutation coord
-epc=: (!i.12)+/@:*(}:+/@:>{:)\
+epcj=: (!i.12)+/@:*(}:+/@:>{:)\
+epci=: 3 : 0
+ a=. }.>(((|,<.@:%~){.),}.@:])&.>/(!i.12);/@:,y
+ |.(i.12)C.~((_1-a)([-i.@>:@-)&.>&(;/)(->:i.12))
+)
+epc=: epcj :. epci
 NB. edge flip coord
 eoc=: (2#.}:) :. ((,2|2-+/)@:((11#2)&#:))
 NB. flip udslice to raw flip udslice array
