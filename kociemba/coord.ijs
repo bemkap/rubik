@@ -1,6 +1,8 @@
 load'defs.ijs'
+NB. CentOriRFLBMod2Coord
+mor2c=: (2#.2|5 4 2 1&{) :. ((6$0)(5 4 2 1)}~(4#2)&#:)
 NB. CentOriCoord
-moc=: 4&#.
+moc=: 4&#. :. ((6#4)&#:)
 NB. CornOriCoord
 coc=: (3#.}:) :. ((,3|3-+/)@:((7#3)&#:))
 NB. EdgeOriCoord

@@ -8,4 +8,4 @@ Pf=: FACELET i. ;:&>cutLF(0 : 0)
  f1 u2 u3 f4 u5 u6 f7 u8 u9 r1 r2 r3 r4 r5 r6 r7 r8 r9 d1 f2 f3 d4 f5 f6 d7 f8 f9 b9 d2 d3 b6 d5 d6 b3 d8 d9 l3 l6 l9 l2 l5 l8 l1 l4 l7 b1 b2 u7 b4 b5 u4 b7 b8 u1
  l7 l4 l1 u4 u5 u6 u7 u8 u9 r1 r2 u1 r4 r5 u2 r7 r8 u3 f1 f2 f3 f4 f5 f6 f7 f8 f9 d1 d2 d3 d4 d5 d6 r9 r6 r3 d7 l2 l3 d8 l5 l6 d9 l8 l9 b3 b6 b9 b2 b5 b8 b1 b4 b7
 )
-Mf=: (Pf{~Axis i.[){inv]
+Mf=: (Pf{~AXIS i.<){inv]
