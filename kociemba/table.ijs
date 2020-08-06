@@ -1,11 +1,11 @@
-load'cubie.ijs' NB. coord.ijs'
+load'cubie.ijs coord.ijs'
 NB. NB. TwistMoveTable
 TMT=: (3#.{:)"2 ccp&CPc"2 otc 3 #.inv i.3^7
 NB. FlipMoveTable
 FMT=: (2#.{:)"2 ecp&EPc"2 ote 2 #.inv i.2^11
 NB. NB. FlipUDSliceMoveTable
 FUDMT=: (3 : 0)''
- if. _1=f=. fread'flipUDSlice.move' do.
+ if. _1=f=. fread'flipUDslice.move' do.
   RFU&fudc1"2 EPc ecp"2/~2048(udc1 inv@:(<.@%~),:eoc inv@:|)"0 RFU
  else.
   64430 27$_4(256#.|.)\a.i.f
@@ -13,8 +13,8 @@ FUDMT=: (3 : 0)''
 )
 NB. NB. UDSliceSortedMoveTable
 UDSMT=: udc2"1({."2 EPc){"1~/~udc2 inv"0 i.11880
-NB. NB. NB. CornPermMoveTable
-NB. CPMT=: _1 x: A."1({."2 CPc){"1~/~(i.8)A.~i.!8
+NB. NB. CornPermMoveTable
+CPMT=: _1 x: A."1({."2 CPc){"1~/~(i.8)A.~i.!8
 NB. NB. GetCorn8PermTable
 NB. x1=: 3 : '(1=*/4{.1(4{.y)}8$0){_1,*`+/1 2 3(,@:,.)}.(}:+/@:>{:)\4{.y'
 NB. x2=: [:]`_1:@.(12&=)4 5 i.~ (10#.inv 45 46 47 54 56 57 64 65 67 74 75 76)&{

@@ -1,4 +1,4 @@
-load'defs.ijs'
+load'defs.ijs sym.ijs'
 NB. CentOriRFLBMod2Coord
 mor2c=: (2#.2|5 4 2 1&{) :. ((6$0)(5 4 2 1)}~(4#2)&#:)
 NB. CentOriCoord
